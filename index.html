@@ -1,0 +1,3244 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#0b1020">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="سيارتي">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%23e11d48'/><path d='M76 66h6c2 0 3-1 3-3v-9c0-3-2-5-5-6l-10-3-8-8c-2-2-4-3-7-3H34c-2 0-4 1-5 3l-5 9c-2 2-3 5-3 8v9c0 2 1 3 3 3h6' fill='none' stroke='white' stroke-width='6' stroke-linecap='round' stroke-linejoin='round'/><circle cx='35' cy='66' r='7' fill='none' stroke='white' stroke-width='6'/><circle cx='68' cy='66' r='7' fill='none' stroke='white' stroke-width='6'/><path d='M42 66h19' stroke='white' stroke-width='6'/></svg>">
+    <link rel="apple-touch-icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%23e11d48'/><path d='M76 66h6c2 0 3-1 3-3v-9c0-3-2-5-5-6l-10-3-8-8c-2-2-4-3-7-3H34c-2 0-4 1-5 3l-5 9c-2 2-3 5-3 8v9c0 2 1 3 3 3h6' fill='none' stroke='white' stroke-width='6' stroke-linecap='round' stroke-linejoin='round'/><circle cx='35' cy='66' r='7' fill='none' stroke='white' stroke-width='6'/><circle cx='68' cy='66' r='7' fill='none' stroke='white' stroke-width='6'/><path d='M42 66h19' stroke='white' stroke-width='6'/></svg>">
+    <title>سيارتي - دليل الصيانة الذكي</title>
+
+    <style>
+        /* ==================== 1. DESIGN TOKENS (DARK DEFAULT & LIGHT) ==================== */
+        :root {
+            --bg-body: #0b1020;
+            --bg-card: #131b2e;
+            --bg-surface: #1b253e;
+            --bg-input: #0e1526;
+            --bg-dock: rgba(19, 27, 46, 0.94);
+            --border-color: rgba(148, 163, 184, 0.16);
+            --border-strong: rgba(148, 163, 184, 0.28);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --crimson: #e11d48;
+            --crimson-hover: #be123c;
+            --crimson-soft: rgba(225, 29, 72, 0.16);
+            --emerald: #10b981;
+            --emerald-hover: #059669;
+            --emerald-soft: rgba(16, 185, 129, 0.16);
+            --amber: #f59e0b;
+            --amber-soft: rgba(245, 158, 11, 0.16);
+            --blue: #3b82f6;
+            --blue-soft: rgba(59, 130, 246, 0.16);
+            --purple: #a855f7;
+            --purple-soft: rgba(168, 85, 247, 0.16);
+            --shadow-card: 0 8px 24px -8px rgba(0, 0, 0, 0.45);
+            --shadow-dock: 0 12px 32px -4px rgba(0, 0, 0, 0.65);
+            --ambient-1: rgba(225, 29, 72, 0.14);
+            --ambient-2: rgba(59, 130, 246, 0.12);
+        }
+
+        html.light {
+            --bg-body: #f1f5f9;
+            --bg-card: #ffffff;
+            --bg-surface: #e2e8f0;
+            --bg-input: #f8fafc;
+            --bg-dock: rgba(255, 255, 255, 0.95);
+            --border-color: rgba(15, 23, 42, 0.10);
+            --border-strong: rgba(15, 23, 42, 0.20);
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --text-muted: #64748b;
+            --crimson-soft: rgba(225, 29, 72, 0.10);
+            --emerald-soft: rgba(16, 185, 129, 0.12);
+            --amber-soft: rgba(245, 158, 11, 0.14);
+            --blue-soft: rgba(59, 130, 246, 0.12);
+            --purple-soft: rgba(168, 85, 247, 0.12);
+            --shadow-card: 0 4px 16px -4px rgba(15, 23, 42, 0.08);
+            --shadow-dock: 0 10px 28px -6px rgba(15, 23, 42, 0.18);
+            --ambient-1: rgba(225, 29, 72, 0.06);
+            --ambient-2: rgba(59, 130, 246, 0.05);
+        }
+
+        /* ==================== 2. BASE & RESET ==================== */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            min-height: 100%;
+            font-family: system-ui, -apple-system, 'Segoe UI', Tahoma, Arial, sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.5;
+            transition: background-color 0.22s ease, color 0.22s ease;
+        }
+
+        body {
+            background-image:
+                radial-gradient(at 15% 0%, var(--ambient-1) 0px, transparent 45%),
+                radial-gradient(at 88% 5%, var(--ambient-2) 0px, transparent 45%);
+            background-attachment: fixed;
+        }
+
+        button, input, textarea, select {
+            font-family: inherit;
+            color: inherit;
+        }
+
+        button {
+            cursor: pointer;
+            border: none;
+            background: none;
+            padding: 0;
+            transition: transform 0.14s ease, background-color 0.18s ease, border-color 0.18s ease, color 0.18s ease, opacity 0.18s ease;
+        }
+
+        button:active:not(:disabled) {
+            transform: scale(0.97);
+        }
+
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .hidden { display: none !important; }
+        .tabular { font-variant-numeric: tabular-nums; }
+        .truncate { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* ==================== 3. LAYOUT SHELLS ==================== */
+        .app-container {
+            max-width: 480px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 10px 12px 96px;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 18px;
+            box-shadow: var(--shadow-card);
+        }
+
+        /* ==================== 4. ONBOARDING WIZARD ==================== */
+        .wizard-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 40;
+            background-color: var(--bg-body);
+            background-image:
+                radial-gradient(at 15% 0%, var(--ambient-1) 0px, transparent 45%),
+                radial-gradient(at 88% 5%, var(--ambient-2) 0px, transparent 45%);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .wizard-header {
+            flex-shrink: 0;
+            max-width: 480px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 14px 14px 10px;
+        }
+
+        .wizard-header-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .wizard-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 0;
+        }
+
+        .wizard-logo {
+            width: 38px;
+            height: 38px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #e11d48, #9f1239);
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            box-shadow: 0 4px 14px rgba(225, 29, 72, 0.35);
+        }
+
+        .wizard-title {
+            margin: 0;
+            font-size: 15px;
+            font-weight: 800;
+            color: var(--text-primary);
+        }
+
+        .wizard-subtitle {
+            margin: 2px 0 0;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .wizard-step-pill {
+            font-size: 11px;
+            font-weight: 800;
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: var(--crimson-soft);
+            color: #fb7185;
+            white-space: nowrap;
+        }
+        html.light .wizard-step-pill { color: #be123c; }
+
+        .wizard-cancel-btn {
+            font-size: 11px;
+            font-weight: 700;
+            padding: 5px 10px;
+            border-radius: 999px;
+            background: var(--bg-surface);
+            color: var(--text-secondary);
+        }
+
+        .wizard-progress {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px;
+        }
+
+        .wizard-bar {
+            height: 5px;
+            border-radius: 999px;
+            background: var(--bg-surface);
+            transition: background-color 0.25s ease;
+        }
+        .wizard-bar.active { background: var(--crimson); }
+
+        .wizard-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 4px 14px 28px;
+        }
+
+        .wizard-inner {
+            max-width: 480px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .wiz-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 14px;
+            box-shadow: var(--shadow-card);
+        }
+
+        .wiz-label {
+            display: block;
+            font-size: 12px;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .input-field {
+            width: 100%;
+            background: var(--bg-input);
+            border: 1.5px solid var(--border-strong);
+            border-radius: 14px;
+            padding: 11px 13px;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-primary);
+            outline: none;
+            transition: border-color 0.18s ease;
+        }
+        .input-field:focus { border-color: var(--crimson); }
+        .input-field::placeholder { color: var(--text-muted); font-weight: 500; }
+
+        .odo-input-wrap {
+            position: relative;
+        }
+        .odo-input-large {
+            text-align: center;
+            font-size: 24px;
+            font-weight: 900;
+            padding: 13px 44px;
+        }
+        .wiz-odo-input {
+            text-align: center;
+            font-size: 17px;
+            font-weight: 800;
+            padding: 12px 14px 12px 46px;
+        }
+        .wiz-odo-input::placeholder {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+        .odo-unit {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 12px;
+            font-weight: 800;
+            color: var(--text-muted);
+        }
+
+        .brand-chips {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            overflow-x: auto;
+            padding-top: 8px;
+        }
+        .brand-chip {
+            padding: 5px 10px;
+            border-radius: 10px;
+            background: var(--bg-surface);
+            color: var(--text-primary);
+            font-size: 11px;
+            font-weight: 700;
+            white-space: nowrap;
+            border: 1px solid var(--border-color);
+        }
+        .brand-chip:hover { border-color: var(--crimson); }
+
+        .option-grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+        .option-grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+
+        .opt-btn {
+            padding: 10px;
+            border-radius: 14px;
+            border: 1.5px solid var(--border-color);
+            background: var(--bg-input);
+            color: var(--text-secondary);
+            text-align: right;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+        .opt-btn.center { text-align: center; align-items: center; }
+        .opt-btn-title { font-size: 12px; font-weight: 800; color: var(--text-primary); }
+        .opt-btn-sub { font-size: 10px; font-weight: 600; opacity: 0.78; }
+        .opt-btn.selected {
+            background: var(--text-primary);
+            border-color: var(--text-primary);
+            color: var(--bg-body);
+        }
+        .opt-btn.selected .opt-btn-title { color: var(--bg-body); }
+
+        /* Wizard Step 2 Bulk & Item Cards */
+        .bulk-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 10px;
+        }
+        .bulk-btn {
+            padding: 10px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 800;
+            color: #ffffff;
+            text-align: center;
+        }
+        .bulk-btn-red {
+            background: var(--crimson);
+            box-shadow: 0 4px 12px rgba(225, 29, 72, 0.3);
+        }
+        .bulk-btn-green {
+            background: var(--emerald-hover);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+
+        .wiz-group-head {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 12px 2px 8px;
+            font-size: 12px;
+            font-weight: 800;
+            color: var(--text-secondary);
+        }
+
+        .wiz-item-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 12px;
+            margin-bottom: 8px;
+            transition: border-color 0.2s ease;
+        }
+        .wiz-item-card.state-now { border-color: rgba(16, 185, 129, 0.55); }
+        .wiz-item-card.state-unknown { border-color: rgba(225, 29, 72, 0.55); }
+        .wiz-item-card.state-custom { border-color: rgba(59, 130, 246, 0.55); }
+
+        .wiz-item-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            margin-bottom: 9px;
+        }
+        .wiz-item-name {
+            font-size: 13px;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin: 0;
+        }
+        .wiz-item-interval {
+            font-size: 10px;
+            font-weight: 700;
+            padding: 3px 7px;
+            border-radius: 8px;
+            background: var(--bg-input);
+            color: var(--text-secondary);
+            white-space: nowrap;
+        }
+
+        .wiz-toggle-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 6px;
+        }
+        .wiz-tbtn {
+            padding: 8px 4px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 800;
+            border: 1px solid var(--border-color);
+            background: var(--bg-input);
+            color: var(--text-secondary);
+            white-space: nowrap;
+        }
+        .wiz-tbtn.active-custom {
+            background: var(--blue);
+            border-color: var(--blue);
+            color: #ffffff;
+        }
+        .wiz-tbtn.active-now {
+            background: var(--emerald-hover);
+            border-color: var(--emerald-hover);
+            color: #ffffff;
+        }
+        .wiz-tbtn.active-unknown {
+            background: var(--crimson);
+            border-color: var(--crimson);
+            color: #ffffff;
+        }
+
+        .wiz-inline-box {
+            margin-top: 9px;
+            padding-top: 9px;
+            border-top: 1px solid var(--border-color);
+        }
+        .wiz-inline-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .wiz-inline-input {
+            flex: 1;
+            background: var(--bg-input);
+            border: 1.5px solid var(--blue);
+            border-radius: 10px;
+            padding: 7px 10px;
+            font-size: 13px;
+            font-weight: 800;
+            color: var(--text-primary);
+            outline: none;
+        }
+        .wiz-status-hint {
+            margin-top: 7px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+        .hint-green { color: var(--emerald); }
+        .hint-red { color: #fb7185; }
+        html.light .hint-red { color: #be123c; }
+
+        /* Sticky Wizard Footer with natural bottom padding */
+        .wizard-footer {
+            flex-shrink: 0;
+            background: var(--bg-dock);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-top: 1px solid var(--border-color);
+            padding: 12px 14px calc(14px + env(safe-area-inset-bottom, 0px));
+        }
+        .wizard-footer-inner {
+            max-width: 480px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* ==================== 5. BUTTONS ==================== */
+        .btn-primary {
+            flex: 1;
+            padding: 12px 16px;
+            border-radius: 14px;
+            background: var(--crimson);
+            color: #ffffff;
+            font-size: 13px;
+            font-weight: 800;
+            text-align: center;
+            box-shadow: 0 4px 14px rgba(225, 29, 72, 0.3);
+        }
+        .btn-primary:hover:not(:disabled) { background: var(--crimson-hover); }
+        .btn-primary:disabled {
+            background: var(--bg-surface);
+            color: var(--text-muted);
+            box-shadow: none;
+            cursor: not-allowed;
+        }
+
+        .btn-success {
+            flex: 1;
+            padding: 12px 16px;
+            border-radius: 14px;
+            background: var(--emerald-hover);
+            color: #ffffff;
+            font-size: 13px;
+            font-weight: 800;
+            text-align: center;
+            box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3);
+        }
+        .btn-secondary {
+            padding: 12px 18px;
+            border-radius: 14px;
+            background: var(--bg-surface);
+            color: var(--text-primary);
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+        /* ==================== 6. COMPACT COCKPIT CARD (NO TOP HEADER) ==================== */
+        .cockpit-card {
+            background: linear-gradient(145deg, #131c33 0%, #1a2642 52%, #0f1629 100%);
+            border: 1px solid rgba(148, 163, 184, 0.22);
+            border-radius: 20px;
+            padding: 12px 14px;
+            color: #ffffff;
+            box-shadow: 0 10px 26px -8px rgba(0, 0, 0, 0.5);
+            margin-bottom: 10px;
+        }
+
+        .cockpit-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .car-pill-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            max-width: 100%;
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.10);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: #f1f5f9;
+            font-size: 11px;
+            font-weight: 800;
+        }
+        .car-pill-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--crimson);
+            flex-shrink: 0;
+        }
+        .car-pill-specs {
+            font-size: 10px;
+            color: #94a3b8;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .odo-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 6px;
+        }
+        .odo-num {
+            font-size: 28px;
+            font-weight: 900;
+            line-height: 1;
+            color: #ffffff;
+            letter-spacing: -0.5px;
+        }
+        .odo-km-txt {
+            font-size: 12px;
+            font-weight: 700;
+            color: #94a3b8;
+        }
+        .odo-edit-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.12);
+            color: #e2e8f0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .health-ring-wrap {
+            position: relative;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .health-ring-svg {
+            width: 50px;
+            height: 50px;
+            transform: rotate(-90deg);
+        }
+        .health-ring-pct {
+            position: absolute;
+            font-size: 11px;
+            font-weight: 900;
+            color: #ffffff;
+        }
+
+        .inc-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 6px;
+            margin-top: 10px;
+        }
+        .inc-btn {
+            padding: 7px 4px;
+            border-radius: 11px;
+            background: rgba(255, 255, 255, 0.10);
+            border: 1px solid rgba(255, 255, 255, 0.10);
+            color: #f8fafc;
+            font-size: 11px;
+            font-weight: 800;
+            white-space: nowrap;
+            text-align: center;
+        }
+        .inc-btn-accent {
+            background: var(--crimson);
+            border-color: var(--crimson);
+            box-shadow: 0 3px 10px rgba(225, 29, 72, 0.35);
+        }
+
+        /* ==================== 7. FILTERS & SEARCH ==================== */
+        .status-strip {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 4px;
+            padding: 4px;
+            border-radius: 14px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            margin-bottom: 8px;
+        }
+        .status-pill {
+            height: 32px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 3px;
+            white-space: nowrap;
+        }
+        .status-pill.active-all { background: var(--text-primary); color: var(--bg-body); }
+        .status-pill.active-overdue { background: var(--crimson); color: #ffffff; }
+        .status-pill.alert-overdue { background: var(--crimson-soft); color: #fb7185; }
+        html.light .status-pill.alert-overdue { color: #be123c; }
+        .status-pill.active-soon { background: var(--amber); color: #ffffff; }
+        .status-pill.alert-soon { background: var(--amber-soft); color: #fbbf24; }
+        html.light .status-pill.alert-soon { color: #b45309; }
+        .status-pill.active-ok { background: var(--emerald-hover); color: #ffffff; }
+        .status-pill.alert-ok { color: var(--emerald); }
+
+        .search-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+        .search-wrap {
+            position: relative;
+            flex: 1;
+        }
+        .search-icon {
+            position: absolute;
+            right: 11px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            pointer-events: none;
+            display: flex;
+        }
+        .search-input {
+            width: 100%;
+            height: 38px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 0 34px 0 12px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-primary);
+            outline: none;
+        }
+        .search-input:focus { border-color: var(--crimson); }
+
+        .add-custom-btn {
+            width: 38px;
+            height: 38px;
+            border-radius: 12px;
+            background: var(--crimson);
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            box-shadow: 0 3px 10px rgba(225, 29, 72, 0.3);
+        }
+
+        .branch-row {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            overflow-x: auto;
+            padding-bottom: 4px;
+            margin-bottom: 8px;
+        }
+        .branch-chip {
+            padding: 6px 12px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 700;
+            white-space: nowrap;
+            background: var(--bg-card);
+            color: var(--text-secondary);
+            border: 1px solid var(--border-color);
+        }
+        .branch-chip.active {
+            background: var(--text-primary);
+            color: var(--bg-body);
+            border-color: var(--text-primary);
+            font-weight: 800;
+        }
+
+        /* ==================== 8. MAINTENANCE ITEM CARDS ==================== */
+        .items-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .m-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 18px;
+            padding: 13px;
+            box-shadow: var(--shadow-card);
+        }
+        .m-card.border-overdue { border-color: rgba(225, 29, 72, 0.48); }
+        .m-card.border-soon { border-color: rgba(245, 158, 11, 0.45); }
+
+        .m-card-head {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+        .m-card-left {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            min-width: 0;
+        }
+        .cat-icon {
+            width: 34px;
+            height: 34px;
+            border-radius: 11px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .cat-engine { background: var(--amber-soft); color: #f59e0b; }
+        .cat-cooling { background: var(--blue-soft); color: #38bdf8; }
+        .cat-transmission { background: var(--crimson-soft); color: #fb7185; }
+        .cat-tires { background: var(--purple-soft); color: #a78bfa; }
+        .cat-custom { background: var(--emerald-soft); color: #34d399; }
+
+        .m-title {
+            margin: 0;
+            font-size: 13.5px;
+            font-weight: 800;
+            color: var(--text-primary);
+            line-height: 1.35;
+        }
+        .m-meta {
+            font-size: 10.5px;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        .status-badge {
+            font-size: 10px;
+            font-weight: 800;
+            padding: 3px 8px;
+            border-radius: 999px;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .badge-ok { background: var(--emerald-soft); color: #34d399; }
+        .badge-soon { background: var(--amber-soft); color: #fbbf24; }
+        .badge-overdue { background: var(--crimson-soft); color: #fb7185; }
+        html.light .badge-ok { color: #047857; }
+        html.light .badge-soon { color: #b45309; }
+        html.light .badge-overdue { color: #be123c; }
+
+        .progress-info {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            font-size: 11px;
+            font-weight: 800;
+            margin-bottom: 5px;
+        }
+        .txt-ok { color: var(--emerald); }
+        .txt-soon { color: var(--amber); }
+        .txt-overdue { color: #fb7185; }
+        html.light .txt-overdue { color: #be123c; }
+
+        .progress-track {
+            width: 100%;
+            height: 6px;
+            border-radius: 999px;
+            background: var(--bg-input);
+            overflow: hidden;
+            margin-bottom: 11px;
+        }
+        .progress-fill {
+            height: 100%;
+            border-radius: 999px;
+            transition: width 0.4s ease;
+        }
+        .fill-ok { background: linear-gradient(90deg, #10b981, #34d399); }
+        .fill-soon { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
+        .fill-overdue { background: linear-gradient(90deg, #e11d48, #fb7185); }
+
+        .m-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .m-btn {
+            flex: 1;
+            padding: 8px 10px;
+            border-radius: 11px;
+            font-size: 11.5px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+        .m-btn-guide {
+            background: var(--bg-surface);
+            color: var(--text-primary);
+        }
+        .m-btn-done {
+            background: var(--emerald-hover);
+            color: #ffffff;
+        }
+        .m-btn-del {
+            width: 34px;
+            height: 34px;
+            border-radius: 10px;
+            background: var(--crimson-soft);
+            color: #fb7185;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        /* ==================== 9. CHECKLIST, HISTORY & SETTINGS ==================== */
+        .hero-banner {
+            background: linear-gradient(135deg, #f59e0b 0%, #ea580c 45%, #e11d48 100%);
+            color: #ffffff;
+            border-radius: 18px;
+            padding: 15px;
+            margin-bottom: 10px;
+        }
+
+        .chk-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 13px;
+            border-radius: 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            margin-bottom: 8px;
+            cursor: pointer;
+        }
+        .chk-item.checked {
+            background: var(--emerald-soft);
+            border-color: rgba(16, 185, 129, 0.4);
+        }
+        .chk-item input[type="checkbox"] {
+            width: 19px;
+            height: 19px;
+            accent-color: #059669;
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
+
+        .stats-grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+        .stat-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 13px;
+        }
+
+        .timeline {
+            position: relative;
+            padding-right: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            right: 5px;
+            top: 12px;
+            bottom: 12px;
+            width: 2px;
+            background: var(--border-strong);
+        }
+        .timeline-card {
+            position: relative;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 12px 13px;
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 10px;
+        }
+        .timeline-dot {
+            position: absolute;
+            right: -15px;
+            top: 16px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--emerald);
+            border: 2px solid var(--bg-body);
+        }
+
+        .settings-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 18px;
+            padding: 15px;
+            margin-bottom: 10px;
+            box-shadow: var(--shadow-card);
+        }
+        .settings-title {
+            margin: 0 0 3px;
+            font-size: 14px;
+            font-weight: 800;
+            color: var(--text-primary);
+        }
+        .settings-sub {
+            margin: 0 0 12px;
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+
+        .switch-btn {
+            position: relative;
+            width: 48px;
+            height: 26px;
+            border-radius: 999px;
+            background: var(--bg-surface);
+            flex-shrink: 0;
+        }
+        .switch-btn.on { background: var(--crimson); }
+        .switch-knob {
+            position: absolute;
+            top: 3px;
+            right: 3px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #ffffff;
+            transition: transform 0.2s ease;
+        }
+        .switch-btn:not(.on) .switch-knob { transform: translateX(-22px); }
+
+        .car-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            padding: 10px 12px;
+            border-radius: 14px;
+            background: var(--bg-input);
+            border: 1px solid var(--border-color);
+            margin-bottom: 8px;
+        }
+        .car-row.active-car {
+            background: var(--crimson-soft);
+            border-color: rgba(225, 29, 72, 0.5);
+        }
+
+        /* ==================== 10. FLOATING BOTTOM DOCK ==================== */
+        .dock-wrap {
+            position: fixed;
+            bottom: 12px;
+            left: 0;
+            right: 0;
+            z-index: 30;
+            padding: 0 12px;
+            pointer-events: none;
+        }
+        .dock {
+            pointer-events: auto;
+            max-width: 440px;
+            margin: 0 auto;
+            background: var(--bg-dock);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1px solid var(--border-strong);
+            border-radius: 20px;
+            padding: 6px;
+            box-shadow: var(--shadow-dock);
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 4px;
+        }
+        .nav-btn {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 3px;
+            padding: 7px 4px;
+            border-radius: 14px;
+            color: var(--text-secondary);
+            font-size: 10.5px;
+            font-weight: 700;
+        }
+        .nav-btn.active {
+            background: var(--crimson-soft);
+            color: #fb7185;
+            font-weight: 800;
+        }
+        html.light .nav-btn.active { color: #be123c; }
+        .nav-dot {
+            position: absolute;
+            top: 5px;
+            right: 24%;
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--amber);
+        }
+
+        /* ==================== 11. MODALS & TOP TOAST ==================== */
+        .modal-backdrop {
+            position: fixed;
+            inset: 0;
+            z-index: 50;
+            background: rgba(2, 6, 23, 0.72);
+            backdrop-filter: blur(4px);
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            padding: 0;
+        }
+        @media (min-width: 520px) {
+            .modal-backdrop { align-items: center; padding: 16px; }
+        }
+        .modal-sheet {
+            width: 100%;
+            max-width: 480px;
+            max-height: 88vh;
+            background: var(--bg-card);
+            border-top: 1px solid var(--border-strong);
+            border-radius: 24px 24px 0 0;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.4);
+        }
+        @media (min-width: 520px) {
+            .modal-sheet { border: 1px solid var(--border-strong); border-radius: 24px; }
+        }
+        .modal-head {
+            padding: 14px 16px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+        .modal-body {
+            padding: 14px 16px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .modal-foot {
+            padding: 12px 16px 20px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            gap: 8px;
+        }
+        .close-x {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: var(--bg-surface);
+            color: var(--text-secondary);
+            font-size: 13px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .info-box {
+            padding: 11px 13px;
+            border-radius: 14px;
+            font-size: 12px;
+            line-height: 1.6;
+        }
+        .info-blue { background: var(--blue-soft); border: 1px solid rgba(59, 130, 246, 0.3); }
+        .info-red { background: var(--crimson-soft); border: 1px solid rgba(225, 29, 72, 0.35); }
+        .steps-ol {
+            margin: 0;
+            padding: 12px 24px 12px 12px;
+            border-radius: 14px;
+            background: var(--bg-input);
+            border: 1px solid var(--border-color);
+            font-size: 12px;
+            line-height: 1.65;
+            color: var(--text-primary);
+        }
+        .steps-ol li { margin-bottom: 6px; }
+        .steps-ol li:last-child { margin-bottom: 0; }
+
+        /* TOP TOAST */
+        .toast {
+            position: fixed;
+            top: 14px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-16px);
+            z-index: 60;
+            background: #f8fafc;
+            color: #0f172a;
+            padding: 9px 16px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 800;
+            box-shadow: 0 10px 28px rgba(0, 0, 0, 0.4);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.22s ease, transform 0.22s ease;
+            white-space: nowrap;
+            max-width: 92vw;
+        }
+        html.light .toast { background: #0f172a; color: #ffffff; }
+        .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+        .toast-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--emerald); flex-shrink: 0; }
+    </style>
+</head>
+<body>
+
+    <!-- ==================== 1. 2-STEP ONBOARDING WIZARD ==================== -->
+    <div id="setupWizard" class="wizard-overlay hidden">
+        <div class="wizard-header">
+            <div class="wizard-header-top">
+                <div class="wizard-brand">
+                    <div class="wizard-logo">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/>
+                            <circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h1 id="wizardMainTitle" class="wizard-title">إعداد ملف سيارتك</h1>
+                        <p id="wizardStepSubtitle" class="wizard-subtitle">1/2 • بيانات السيارة والعداد</p>
+                    </div>
+                </div>
+                <div style="display:flex;align-items:center;gap:6px;">
+                    <button type="button" id="wizardCancelBtn" class="wizard-cancel-btn hidden" onclick="cancelSetupWizard()">إلغاء</button>
+                    <span id="wizardStepPill" class="wizard-step-pill tabular">1 / 2</span>
+                </div>
+            </div>
+            <div class="wizard-progress">
+                <div class="wizard-bar active"></div>
+                <div id="wizardBar2" class="wizard-bar"></div>
+            </div>
+        </div>
+
+        <div id="wizardBody" class="wizard-body">
+            <div class="wizard-inner">
+
+                <!-- STEP 1: CAR INFO -->
+                <div id="wizardStep1" style="display:flex;flex-direction:column;gap:12px;">
+                    <div class="wiz-section">
+                        <label class="wiz-label" for="wizCarNameInput">1. اسم السيارة والموديل:</label>
+                        <input type="text" id="wizCarNameInput" class="input-field" placeholder="مثلاً: تويوتا كورولا 2021، نيسان صني 2022..." oninput="validateWizardStep1()">
+                        <div class="brand-chips no-scrollbar">
+                            <button type="button" class="brand-chip" onclick="pickBrand('تويوتا ')">تويوتا</button>
+                            <button type="button" class="brand-chip" onclick="pickBrand('نيسان ')">نيسان</button>
+                            <button type="button" class="brand-chip" onclick="pickBrand('هيونداي ')">هيونداي</button>
+                            <button type="button" class="brand-chip" onclick="pickBrand('كيا ')">كيا</button>
+                            <button type="button" class="brand-chip" onclick="pickBrand('هوندا ')">هوندا</button>
+                            <button type="button" class="brand-chip" onclick="pickBrand('مازدا ')">مازدا</button>
+                            <button type="button" class="brand-chip" onclick="pickBrand('شيفروليه ')">شيفروليه</button>
+                            <button type="button" class="brand-chip" onclick="pickBrand('فورد ')">فورد</button>
+                            <button type="button" class="brand-chip" onclick="pickBrand('مرسيدس ')">مرسيدس</button>
+                            <button type="button" class="brand-chip" onclick="pickBrand('بي إم دبليو ')">بي إم دبليو</button>
+                        </div>
+                    </div>
+
+                    <div class="wiz-section">
+                        <label class="wiz-label" for="wizOdometerInput">2. كم ماشية السيارة حالياً؟ <span style="color:var(--crimson)">*</span></label>
+                        <div class="odo-input-wrap">
+                            <input type="number" id="wizOdometerInput" inputmode="numeric" min="0" class="input-field wiz-odo-input tabular" placeholder="أدخل قراءة العداد الحالية مثلاً 120000" oninput="validateWizardStep1()">
+                            <span class="odo-unit">كم</span>
+                        </div>
+                        <div id="wizOdoErr" class="hidden" style="color:#fb7185;font-size:11px;font-weight:700;text-align:center;margin-top:6px;">يرجى إدخال قراءة عداد السيارة للمتابعة</div>
+                    </div>
+
+                    <div class="wiz-section">
+                        <span class="wiz-label">3. نوع القير (ناقل الحركة):</span>
+                        <div class="option-grid-2">
+                            <button type="button" id="wiz-trans-AT" class="opt-btn" onclick="selectWizTrans('AT')">
+                                <span class="opt-btn-title">أوتوماتيك (AT)</span>
+                                <span class="opt-btn-sub">زيت ATF مخصص</span>
+                            </button>
+                            <button type="button" id="wiz-trans-CVT" class="opt-btn" onclick="selectWizTrans('CVT')">
+                                <span class="opt-btn-title">قير CVT</span>
+                                <span class="opt-btn-sub">زيت CVT حصراً</span>
+                            </button>
+                            <button type="button" id="wiz-trans-DCT" class="opt-btn" onclick="selectWizTrans('DCT')">
+                                <span class="opt-btn-title">دبل كلتش (DCT)</span>
+                                <span class="opt-btn-sub">ثنائي القابض</span>
+                            </button>
+                            <button type="button" id="wiz-trans-MT" class="opt-btn" onclick="selectWizTrans('MT')">
+                                <span class="opt-btn-title">عادي (MT)</span>
+                                <span class="opt-btn-sub">زيت تروس MTF</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="wiz-section">
+                        <span class="wiz-label">4. نوع المحرك:</span>
+                        <div class="option-grid-2">
+                            <button type="button" id="wiz-eng-Petrol" class="opt-btn" onclick="selectWizEngine('Petrol')">
+                                <span class="opt-btn-title">بنزين</span>
+                                <span class="opt-btn-sub">محرك احتراق داخلي</span>
+                            </button>
+                            <button type="button" id="wiz-eng-Hybrid" class="opt-btn" onclick="selectWizEngine('Hybrid')">
+                                <span class="opt-btn-title">هايبرد</span>
+                                <span class="opt-btn-sub">بنزين + نظام هجين</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="wiz-section">
+                        <span class="wiz-label">5. مسافة تبديل زيت المحرك:</span>
+                        <div class="option-grid-3">
+                            <button type="button" id="wiz-oil-5000" class="opt-btn center" onclick="selectWizOil(5000)">
+                                <span class="opt-btn-title tabular">5,000 كم</span>
+                                <span class="opt-btn-sub">عادي / نصف</span>
+                            </button>
+                            <button type="button" id="wiz-oil-8000" class="opt-btn center" onclick="selectWizOil(8000)">
+                                <span class="opt-btn-title tabular">8,000 كم</span>
+                                <span class="opt-btn-sub">تخليقي</span>
+                            </button>
+                            <button type="button" id="wiz-oil-10000" class="opt-btn center" onclick="selectWizOil(10000)">
+                                <span class="opt-btn-title tabular">10,000 كم</span>
+                                <span class="opt-btn-sub">تخليقي بالكامل</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 2: LAST REPLACEMENT FOR ALL 19 ITEMS -->
+                <div id="wizardStep2" class="hidden">
+                    <div class="wiz-section">
+                        <div style="font-size:14px;font-weight:800;margin-bottom:4px;">تفاصيل آخر تبديل لكل قطعة</div>
+                        <div style="font-size:11.5px;color:var(--text-secondary);">حدد حالة كل قطعة أو استخدم أزرار التعيين السريع للكل بالأسفل:</div>
+                        <div class="bulk-grid">
+                            <button type="button" class="bulk-btn bulk-btn-red" onclick="wizardBulkSet('unknown')">تعيين الكل كـ (لا أعلم)</button>
+                            <button type="button" class="bulk-btn bulk-btn-green" onclick="wizardBulkSet('now')">تعيين الكل كـ (بدلته الآن)</button>
+                        </div>
+                    </div>
+                    <div id="wizardItemsContainer"></div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="wizard-footer">
+            <div class="wizard-footer-inner">
+                <button type="button" id="wizBackBtn" class="btn-secondary hidden" onclick="goToWizardStep(1)">رجوع</button>
+                <button type="button" id="wizNextBtn" class="btn-primary" disabled onclick="goToWizardStep(2)">التالي: تفاصيل آخر تبديل</button>
+                <button type="button" id="wizFinishBtn" class="btn-success hidden" onclick="finishSetupWizard()">حفظ والبدء بالتطبيق</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== 2. MAIN APPLICATION (NO TOP HEADER) ==================== -->
+    <div id="mainAppShell" class="hidden">
+        <main class="app-container">
+
+            <!-- TAB 1: الصيانات -->
+            <section id="view-maintenance" class="app-view">
+                <!-- COMPACT COCKPIT CARD (VISIBLE ONLY IN MAINTENANCE TAB) -->
+                <div class="cockpit-card">
+                    <div class="cockpit-top">
+                        <div style="min-width:0;flex:1;">
+                            <button type="button" class="car-pill-btn" onclick="openCarSwitcherModal()">
+                                <span class="car-pill-dot"></span>
+                                <span id="activeCarNameBadge" class="truncate">سيارتي</span>
+                                <span id="activeCarSpecsBadge" class="car-pill-specs"></span>
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                            </button>
+                            <div class="odo-row">
+                                <button type="button" onclick="openOdometerModal()" style="display:flex;align-items:center;gap:8px;color:inherit;">
+                                    <span id="odometerDisplay" class="odo-num tabular">0</span>
+                                    <span class="odo-km-txt">كم</span>
+                                    <span class="odo-edit-icon" title="تعديل العداد">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg>
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="health-ring-wrap" title="صحة السيارة العامة">
+                            <svg class="health-ring-svg" viewBox="0 0 56 56">
+                                <circle cx="28" cy="28" r="22" fill="none" stroke="rgba(255,255,255,0.14)" stroke-width="4.5"/>
+                                <circle id="healthRingCircle" cx="28" cy="28" r="22" fill="none" stroke="#10b981" stroke-width="4.5" stroke-linecap="round" stroke-dasharray="138.23" stroke-dashoffset="0"/>
+                            </svg>
+                            <span id="healthPercentText" class="health-ring-pct tabular">100%</span>
+                        </div>
+                    </div>
+
+                    <div class="inc-row">
+                        <button type="button" class="inc-btn tabular" onclick="incrementOdometer(100)">+100 كم</button>
+                        <button type="button" class="inc-btn tabular" onclick="incrementOdometer(500)">+500 كم</button>
+                        <button type="button" class="inc-btn inc-btn-accent tabular" onclick="incrementOdometer(1000)">+1000 كم</button>
+                    </div>
+                </div>
+
+                <div class="status-strip">
+                    <button type="button" id="stat-all" class="status-pill tabular" onclick="setStatusFilter('all')">الكل <span id="cnt-all">(0)</span></button>
+                    <button type="button" id="stat-overdue" class="status-pill tabular" onclick="setStatusFilter('overdue')">مطلوب <span id="cnt-overdue">(0)</span></button>
+                    <button type="button" id="stat-soon" class="status-pill tabular" onclick="setStatusFilter('soon')">قريباً <span id="cnt-soon">(0)</span></button>
+                    <button type="button" id="stat-ok" class="status-pill tabular" onclick="setStatusFilter('ok')">سليم <span id="cnt-ok">(0)</span></button>
+                </div>
+
+                <div class="search-row">
+                    <div class="search-wrap">
+                        <span class="search-icon">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                        </span>
+                        <input type="text" id="searchInput" class="search-input" placeholder="بحث عن صيانة (زيت، قير، راديتر، بلكات...)" oninput="renderMaintenanceList()">
+                    </div>
+                    <button type="button" class="add-custom-btn" onclick="openCustomModal()" title="إضافة صيانة مخصصة" aria-label="إضافة صيانة مخصصة">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+                    </button>
+                </div>
+
+                <div id="branchTabs" class="branch-row no-scrollbar">
+                    <button type="button" class="branch-chip active" data-branch="all" onclick="setBranchFilter('all')">الكل</button>
+                    <button type="button" class="branch-chip" data-branch="engine" onclick="setBranchFilter('engine')">المحرك والزيوت</button>
+                    <button type="button" class="branch-chip" data-branch="cooling" onclick="setBranchFilter('cooling')">التبريد والمكيف</button>
+                    <button type="button" class="branch-chip" data-branch="transmission" onclick="setBranchFilter('transmission')">القير والفرامل</button>
+                    <button type="button" class="branch-chip" data-branch="tires" onclick="setBranchFilter('tires')">الإطارات والكهرباء</button>
+                    <button type="button" class="branch-chip" data-branch="custom" onclick="setBranchFilter('custom')">مخصص</button>
+                </div>
+
+                <div id="maintenanceGrid" class="items-list"></div>
+            </section>
+
+            <!-- TAB 2: التصفية -->
+            <section id="view-checklist" class="app-view hidden">
+                <div class="hero-banner">
+                    <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px;">
+                        <div>
+                            <div style="font-size:15px;font-weight:900;">التصفية والفحص الأولي</div>
+                            <div style="font-size:11px;opacity:0.92;">فحوصات أساسية بعد شراء السيارة لبدء التتبع بثقة</div>
+                        </div>
+                        <span id="chkPercentBadge" class="tabular" style="font-size:16px;font-weight:900;background:rgba(255,255,255,0.22);padding:4px 10px;border-radius:10px;">0%</span>
+                    </div>
+                    <div id="chkCountLabel" style="font-size:11px;font-weight:700;margin-bottom:5px;">تم إنجاز 0 من 7</div>
+                    <div style="width:100%;height:7px;background:rgba(0,0,0,0.22);border-radius:999px;overflow:hidden;">
+                        <div id="chkProgressFill" style="height:100%;width:0%;background:#ffffff;border-radius:999px;transition:width 0.35s ease;"></div>
+                    </div>
+                </div>
+                <div id="checklistContainer"></div>
+            </section>
+
+            <!-- TAB 3: السجل -->
+            <section id="view-history" class="app-view hidden">
+                <div class="stats-grid-2">
+                    <div class="stat-box">
+                        <div style="font-size:11px;font-weight:700;color:var(--text-secondary);">الصيانات الموثّقة</div>
+                        <div id="histCount" class="tabular" style="font-size:24px;font-weight:900;margin-top:2px;">0</div>
+                    </div>
+                    <div class="stat-box">
+                        <div style="font-size:11px;font-weight:700;color:var(--text-secondary);">إجمالي المصاريف</div>
+                        <div style="display:flex;align-items:baseline;gap:4px;margin-top:2px;">
+                            <span id="histCost" class="tabular" style="font-size:20px;font-weight:900;color:var(--emerald);">0</span>
+                            <span style="font-size:11px;font-weight:700;color:var(--text-muted);">د.ع</span>
+                        </div>
+                    </div>
+                </div>
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+                    <span style="font-size:12px;font-weight:800;color:var(--text-secondary);">السجل الزمني للصيانات</span>
+                    <button type="button" onclick="switchView('maintenance')" style="font-size:12px;font-weight:800;color:var(--crimson);">+ تسجيل صيانة</button>
+                </div>
+                <div id="historyContainer"></div>
+            </section>
+
+            <!-- TAB 4: الإعدادات -->
+            <section id="view-settings" class="app-view hidden">
+                <!-- 1. Theme Toggle -->
+                <div class="settings-card" style="display:flex;align-items:center;justify-content:space-between;gap:12px;">
+                    <div>
+                        <h3 class="settings-title">المظهر</h3>
+                        <p id="themeStatusTxt" style="margin:0;font-size:11px;color:var(--text-secondary);">الوضع المظلم مُفعّل</p>
+                    </div>
+                    <button type="button" id="themeSwitchBtn" class="switch-btn on" onclick="toggleTheme()" aria-label="تبديل المظهر">
+                        <span class="switch-knob"></span>
+                    </button>
+                </div>
+
+                <!-- 2. Vehicles Manager -->
+                <div class="settings-card">
+                    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px;">
+                        <div>
+                            <h3 class="settings-title">سياراتي المحفوظة</h3>
+                            <p style="margin:0;font-size:11px;color:var(--text-secondary);">بدّل بين أكثر من سيارة أو أضف سيارة جديدة</p>
+                        </div>
+                        <button type="button" onclick="openSetupWizard('new')" style="padding:7px 11px;border-radius:10px;background:var(--crimson);color:#fff;font-size:11px;font-weight:800;white-space:nowrap;">+ سيارة جديدة</button>
+                    </div>
+                    <div id="settingsVehiclesList"></div>
+                </div>
+
+                <!-- 3. Current Car Specs -->
+                <div class="settings-card">
+                    <h3 class="settings-title">مواصفات السيارة الحالية</h3>
+                    <p class="settings-sub">تتحدث تعليمات «ماذا أفعل؟» ومواعيد الزيوت تلقائياً</p>
+
+                    <div style="margin-bottom:12px;">
+                        <label class="wiz-label" for="setCarNameInp">اسم السيارة والموديل:</label>
+                        <div style="display:flex;gap:8px;">
+                            <input type="text" id="setCarNameInp" class="input-field" style="padding:8px 11px;font-size:13px;">
+                            <button type="button" onclick="saveCarNameFromSettings()" class="btn-secondary" style="padding:8px 14px;font-size:12px;">حفظ</button>
+                        </div>
+                    </div>
+
+                    <div style="margin-bottom:12px;">
+                        <span class="wiz-label">نوع القير:</span>
+                        <div class="option-grid-2">
+                            <button type="button" id="set-trans-AT" class="opt-btn" onclick="updateCarSpec('transmission','AT')"><span class="opt-btn-title">أوتوماتيك (AT)</span></button>
+                            <button type="button" id="set-trans-CVT" class="opt-btn" onclick="updateCarSpec('transmission','CVT')"><span class="opt-btn-title">قير CVT</span></button>
+                            <button type="button" id="set-trans-DCT" class="opt-btn" onclick="updateCarSpec('transmission','DCT')"><span class="opt-btn-title">دبل كلتش (DCT)</span></button>
+                            <button type="button" id="set-trans-MT" class="opt-btn" onclick="updateCarSpec('transmission','MT')"><span class="opt-btn-title">عادي (MT)</span></button>
+                        </div>
+                    </div>
+
+                    <div style="margin-bottom:12px;">
+                        <span class="wiz-label">نوع المحرك:</span>
+                        <div class="option-grid-2">
+                            <button type="button" id="set-eng-Petrol" class="opt-btn" onclick="updateCarSpec('engineType','Petrol')"><span class="opt-btn-title">بنزين</span></button>
+                            <button type="button" id="set-eng-Hybrid" class="opt-btn" onclick="updateCarSpec('engineType','Hybrid')"><span class="opt-btn-title">هايبرد</span></button>
+                        </div>
+                    </div>
+
+                    <div style="margin-bottom:12px;">
+                        <span class="wiz-label">دورة زيت المحرك:</span>
+                        <div class="option-grid-3">
+                            <button type="button" id="set-oil-5000" class="opt-btn center" onclick="updateCarSpec('oilInterval',5000)"><span class="opt-btn-title tabular">5,000 كم</span></button>
+                            <button type="button" id="set-oil-8000" class="opt-btn center" onclick="updateCarSpec('oilInterval',8000)"><span class="opt-btn-title tabular">8,000 كم</span></button>
+                            <button type="button" id="set-oil-10000" class="opt-btn center" onclick="updateCarSpec('oilInterval',10000)"><span class="opt-btn-title tabular">10,000 كم</span></button>
+                        </div>
+                    </div>
+
+                    <button type="button" onclick="openSetupWizard('reconfigure')" style="width:100%;padding:11px;border-radius:12px;background:var(--blue-soft);color:#60a5fa;border:1px solid rgba(59,130,246,0.35);font-size:12px;font-weight:800;">
+                        إعادة إعداد السيارة من البداية
+                    </button>
+                </div>
+
+                <!-- 4. Download & Install -->
+                <div class="settings-card">
+                    <h3 class="settings-title">تثبيت التطبيق على هاتفك</h3>
+                    <p class="settings-sub">يعمل 100% بدون إنترنت بعد تحميله على جهازك</p>
+                    <button type="button" onclick="downloadAppFile()" class="btn-primary" style="width:100%;margin-bottom:10px;">
+                        تحميل ملف التطبيق لهاتفك (sayarati.html)
+                    </button>
+                    <div class="info-box" style="background:var(--bg-input);border:1px solid var(--border-color);font-size:11px;color:var(--text-secondary);">
+                        <div style="margin-bottom:4px;"><strong style="color:var(--emerald);">أندرويد:</strong> افتح تطبيق <strong>ملفاتي</strong> ← <strong>التنزيلات</strong> ← اضغط مطولاً على الملف ← <strong>إضافة إلى الشاشة الرئيسية</strong>.</div>
+                        <div><strong style="color:var(--blue);">آيفون وأندرويد:</strong> ارفع الملف على <strong>app.netlify.com/drop</strong> مجاناً وافتح الرابط في المتصفح ثم اختر <strong>الإضافة إلى الشاشة الرئيسية</strong>.</div>
+                    </div>
+                </div>
+
+                <!-- 5. Backup & Reset -->
+                <div class="settings-card">
+                    <h3 class="settings-title">النسخ الاحتياطي وإدارة البيانات</h3>
+                    <div class="option-grid-2" style="margin:10px 0;">
+                        <button type="button" class="btn-secondary" style="font-size:12px;" onclick="exportBackup()">تصدير JSON</button>
+                        <label class="btn-secondary" style="font-size:12px;text-align:center;cursor:pointer;display:block;">
+                            استيراد JSON
+                            <input type="file" id="importJsonInput" accept=".json" style="display:none;" onchange="importBackup(event)">
+                        </label>
+                    </div>
+                    <button type="button" onclick="openModal('resetModal')" style="width:100%;padding:10px;border-radius:12px;background:var(--crimson-soft);color:#fb7185;border:1px solid rgba(225,29,72,0.35);font-size:12px;font-weight:800;">
+                        تصفير جميع البيانات
+                    </button>
+                </div>
+            </section>
+        </main>
+
+        <!-- FLOATING BOTTOM NAVIGATION DOCK -->
+        <div class="dock-wrap">
+            <nav class="dock">
+                <button type="button" class="nav-btn active" data-nav="maintenance" onclick="switchView('maintenance')">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+                    <span>الصيانات</span>
+                </button>
+                <button type="button" class="nav-btn" data-nav="checklist" onclick="switchView('checklist')">
+                    <span id="checklistNavDot" class="nav-dot hidden"></span>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="4" x="8" y="2" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="m9 14 2 2 4-4"/></svg>
+                    <span>التصفية</span>
+                </button>
+                <button type="button" class="nav-btn" data-nav="history" onclick="switchView('history')">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l4 2"/></svg>
+                    <span>السجل</span>
+                </button>
+                <button type="button" class="nav-btn" data-nav="settings" onclick="switchView('settings')">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9c.26.6.85 1 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                    <span>الإعدادات</span>
+                </button>
+            </nav>
+        </div>
+    </div>
+
+    <!-- ==================== 3. MODALS ==================== -->
+
+    <!-- Car Switcher Modal -->
+    <div id="carSwitcherModal" class="modal-backdrop hidden" onclick="backdropClose(event,'carSwitcherModal')">
+        <div class="modal-sheet">
+            <div class="modal-head">
+                <strong style="font-size:15px;">اختيار أو إضافة سيارة</strong>
+                <button type="button" class="close-x" onclick="closeModal('carSwitcherModal')">✕</button>
+            </div>
+            <div class="modal-body" id="modalVehiclesList"></div>
+            <div class="modal-foot">
+                <button type="button" class="btn-primary" onclick="closeModal('carSwitcherModal');openSetupWizard('new');">+ إضافة سيارة جديدة</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Odometer Modal -->
+    <div id="odometerModal" class="modal-backdrop hidden" onclick="backdropClose(event,'odometerModal')">
+        <div class="modal-sheet">
+            <div class="modal-head">
+                <strong style="font-size:15px;">تحديث قراءة العداد</strong>
+                <button type="button" class="close-x" onclick="closeModal('odometerModal')">✕</button>
+            </div>
+            <div class="modal-body">
+                <label class="wiz-label" for="odoModalInp">المسافة الحالية للسيارة (كم):</label>
+                <input type="number" id="odoModalInp" inputmode="numeric" min="0" class="input-field odo-input-large tabular">
+            </div>
+            <div class="modal-foot">
+                <button type="button" class="btn-primary" onclick="saveOdometerModal()">حفظ التحديث</button>
+                <button type="button" class="btn-secondary" onclick="closeModal('odometerModal')">إلغاء</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Guide Modal ("ماذا أفعل؟") -->
+    <div id="guideModal" class="modal-backdrop hidden" onclick="backdropClose(event,'guideModal')">
+        <div class="modal-sheet">
+            <div class="modal-head">
+                <div>
+                    <div id="guideCatBadge" style="font-size:10px;font-weight:800;color:#fb7185;margin-bottom:2px;"></div>
+                    <strong id="guideTitle" style="font-size:15px;"></strong>
+                </div>
+                <button type="button" class="close-x" onclick="closeModal('guideModal')">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="option-grid-2">
+                    <div class="stat-box" style="padding:10px;">
+                        <div style="font-size:10px;color:var(--text-secondary);">التكرار بالمسافة</div>
+                        <div id="guideKm" style="font-size:13px;font-weight:800;margin-top:2px;"></div>
+                    </div>
+                    <div class="stat-box" style="padding:10px;">
+                        <div style="font-size:10px;color:var(--text-secondary);">التكرار الزمني</div>
+                        <div id="guideMonths" style="font-size:13px;font-weight:800;margin-top:2px;"></div>
+                    </div>
+                </div>
+                <div class="info-box info-blue">
+                    <div style="font-weight:800;margin-bottom:4px;">المواصفات الموصى بها لسيارتك:</div>
+                    <div id="guideSpecs"></div>
+                </div>
+                <div id="guideWarnWrap" class="info-box info-red hidden">
+                    <div style="font-weight:800;margin-bottom:4px;">⚠️ تنبيه سلامة هام:</div>
+                    <div id="guideWarn"></div>
+                </div>
+                <div>
+                    <div class="wiz-label">ماذا أفعل؟ (خطوات التنفيذ والفحص):</div>
+                    <ol id="guideSteps" class="steps-ol"></ol>
+                </div>
+            </div>
+            <div class="modal-foot">
+                <button type="button" id="guideDoneBtn" class="btn-success">تسجيل إتمام الصيانة الآن</button>
+                <button type="button" class="btn-secondary" onclick="closeModal('guideModal')">إغلاق</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Log Maintenance Modal ("تمت الصيانة") -->
+    <div id="logModal" class="modal-backdrop hidden" onclick="backdropClose(event,'logModal')">
+        <div class="modal-sheet">
+            <div class="modal-head">
+                <div>
+                    <strong style="font-size:15px;">تسجيل إتمام الصيانة</strong>
+                    <div id="logItemTitle" style="font-size:11px;font-weight:700;color:#fb7185;margin-top:2px;"></div>
+                </div>
+                <button type="button" class="close-x" onclick="closeModal('logModal')">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="option-grid-2">
+                    <div>
+                        <label class="wiz-label" for="logKmInp">العداد (كم)</label>
+                        <input type="number" id="logKmInp" inputmode="numeric" class="input-field tabular" style="padding:9px 11px;">
+                    </div>
+                    <div>
+                        <label class="wiz-label" for="logDateInp">التاريخ</label>
+                        <input type="date" id="logDateInp" class="input-field" style="padding:9px 11px;">
+                    </div>
+                </div>
+                <div>
+                    <label class="wiz-label" for="logCostInp">التكلفة بالدينار العراقي (اختياري)</label>
+                    <input type="number" id="logCostInp" inputmode="numeric" placeholder="مثلاً: 35000" class="input-field tabular" style="padding:9px 11px;">
+                </div>
+                <div>
+                    <label class="wiz-label" for="logNotesInp">ملاحظات (نوع الزيت، اسم الورشة...)</label>
+                    <input type="text" id="logNotesInp" placeholder="اختياري..." class="input-field" style="padding:9px 11px;font-size:13px;">
+                </div>
+                <label style="display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;cursor:pointer;">
+                    <input type="checkbox" id="logAddHistChk" checked style="width:16px;height:16px;accent-color:#059669;">
+                    توثيق العملية في السجل الزمني والمصاريف
+                </label>
+            </div>
+            <div class="modal-foot">
+                <button type="button" class="btn-success" onclick="saveServiceLog()">حفظ وتحديث الموعد</button>
+                <button type="button" class="btn-secondary" onclick="closeModal('logModal')">إلغاء</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Custom Item Modal -->
+    <div id="customModal" class="modal-backdrop hidden" onclick="backdropClose(event,'customModal')">
+        <div class="modal-sheet">
+            <div class="modal-head">
+                <strong style="font-size:15px;">إضافة صيانة مخصصة</strong>
+                <button type="button" class="close-x" onclick="closeModal('customModal')">✕</button>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <label class="wiz-label" for="custTitleInp">اسم البند (مثلاً: تجديد السنوية، غسل المحرك)</label>
+                    <input type="text" id="custTitleInp" placeholder="اكتب اسم التذكير..." class="input-field" style="padding:9px 11px;">
+                </div>
+                <div>
+                    <label class="wiz-label" for="custBranchInp">القسم</label>
+                    <select id="custBranchInp" class="input-field" style="padding:9px 11px;font-size:13px;">
+                        <option value="custom">مخصص</option>
+                        <option value="engine">المحرك والزيوت</option>
+                        <option value="cooling">التبريد والمكيف</option>
+                        <option value="transmission">القير والفرامل</option>
+                        <option value="tires">الإطارات والكهرباء</option>
+                    </select>
+                </div>
+                <div class="option-grid-2">
+                    <div>
+                        <label class="wiz-label" for="custKmInp">كل كم كم؟ (0 للزمني)</label>
+                        <input type="number" id="custKmInp" inputmode="numeric" value="10000" min="0" class="input-field tabular" style="padding:9px 11px;">
+                    </div>
+                    <div>
+                        <label class="wiz-label" for="custMonthsInp">كل كم شهر؟</label>
+                        <input type="number" id="custMonthsInp" inputmode="numeric" value="12" min="1" class="input-field tabular" style="padding:9px 11px;">
+                    </div>
+                </div>
+                <div>
+                    <label class="wiz-label" for="custNotesInp">ملاحظات (اختياري)</label>
+                    <textarea id="custNotesInp" rows="2" placeholder="أي تفاصيل إضافية..." class="input-field" style="padding:9px 11px;font-size:12px;"></textarea>
+                </div>
+            </div>
+            <div class="modal-foot">
+                <button type="button" class="btn-primary" onclick="saveCustomItem()">إضافة البند</button>
+                <button type="button" class="btn-secondary" onclick="closeModal('customModal')">إلغاء</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reset Confirmation Modal -->
+    <div id="resetModal" class="modal-backdrop hidden" onclick="backdropClose(event,'resetModal')">
+        <div class="modal-sheet">
+            <div class="modal-head">
+                <strong style="font-size:15px;color:#fb7185;">تصفير جميع البيانات؟</strong>
+                <button type="button" class="close-x" onclick="closeModal('resetModal')">✕</button>
+            </div>
+            <div class="modal-body">
+                <p style="margin:0;font-size:13px;color:var(--text-secondary);">سيتم حذف جميع السيارات والسجلات وإعادة فتح معالج الإعداد الأولي من جديد.</p>
+            </div>
+            <div class="modal-foot">
+                <button type="button" class="btn-primary" onclick="confirmResetAll()">نعم، صفّر الكل</button>
+                <button type="button" class="btn-secondary" onclick="closeModal('resetModal')">إلغاء</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOP TOAST -->
+    <div id="toast" class="toast">
+        <span class="toast-dot"></span>
+        <span id="toastText">تم الحفظ</span>
+    </div>
+
+    <script>
+        (function () {
+            'use strict';
+
+            // ==================== 1. CONSTANTS & 19 BUILT-IN ITEMS ====================
+            var STORAGE_KEY = 'sayarati_universal_v3';
+
+            var BRANCH_LABELS = {
+                engine: 'المحرك والزيوت',
+                cooling: 'التبريد والمكيف',
+                transmission: 'القير والفرامل',
+                tires: 'الإطارات والكهرباء',
+                custom: 'مخصص'
+            };
+
+            var BRANCH_ORDER = ['engine', 'cooling', 'transmission', 'tires'];
+
+            var BRANCH_SVGS = {
+                engine: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>',
+                cooling: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h20"/><path d="M12 2v20"/><path d="m20 16-4-4 4-4"/><path d="m4 8 4 4-4 4"/></svg>',
+                transmission: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/></svg>',
+                tires: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>',
+                custom: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>'
+            };
+
+            var BASE_ITEMS = [
+                {
+                    id: 'engine_oil', title: 'زيت المحرك وفلتر الزيت', branch: 'engine',
+                    intervalKm: 5000, intervalMonths: 4,
+                    specs: 'التزم بلزوجة المصنع الموصى بها لسيارتك (غالباً 0W-20 أو 5W-30 بتصنيف API SP / SN) مع استبدال فلتر الزيت الأصلي في كل تبديلة.',
+                    warning: 'تجنب الزيوت الثقيلة غير الموصى بها لأنها تبطئ وصول الزيت عند التشغيل البارد وتزيد صرفية الوقود.',
+                    steps: [
+                        'أوقف السيارة على سطح مستوٍ وانتظر 10 دقائق بعد إطفاء المحرك.',
+                        'افتح صرة الزيت السفلية وفرّغ الزيت القديم بالكامل ثم فك الفلتر القديم.',
+                        'ادهن جلدة الفلتر الجديد بقليل من الزيت وشده باليد بإحكام معتدل.',
+                        'أضف كمية الزيت المحددة لسيارتك وشغّل المحرك دقيقة ثم تأكد من المستوى على عصا القياس.'
+                    ]
+                },
+                {
+                    id: 'air_filter_clean', title: 'تنظيف فلتر هواء المحرك', branch: 'engine',
+                    intervalKm: 5000, intervalMonths: 3,
+                    specs: 'تنظيف دوري بالهواء المضغوط لإزالة الأتربة والحفاظ على عزم المحرك وتقليل استهلاك البنزين.',
+                    warning: 'انفخ الهواء من الجهة النظيفة إلى المتسخة بمسافة آمنة، ولا تغسل الفلتر الورقي بالماء.',
+                    steps: [
+                        'افتح مشابك علبة فلتر الهواء أعلى المحرك وأخرج الفلتر.',
+                        'نظفه بالهواء المضغوط وامسح قاع العلبة بقطعة قماش جافة.',
+                        'أعد تركيب الفلتر وأغلق المشابك بإحكام.'
+                    ]
+                },
+                {
+                    id: 'air_filter_replace', title: 'تبديل فلتر هواء المحرك', branch: 'engine',
+                    intervalKm: 15000, intervalMonths: 12,
+                    specs: 'فلتر هواء أصلي مطابق لموديل سيارتك لضمان تنقية مثالية للهواء الداخل للمحرك.',
+                    warning: 'الفلتر التجاري الرديء يسمح بمرور الغبار الناعم إلى حساس الهواء وغرفة الاحتراق.',
+                    steps: [
+                        'افتح علبة فلتر الهواء وأزل الفلتر القديم.',
+                        'نظّف العلبة من الأتربة وركّب الفلتر الجديد مع التأكد من إطباق الإطار المطاطي.'
+                    ]
+                },
+                {
+                    id: 'spark_plugs', title: 'البلكات (شمعات الاحتراق)', branch: 'engine',
+                    intervalKm: 40000, intervalMonths: 24,
+                    specs: 'بلكات أصلية مطابقة لرقم محركك (العادية كل 40,000 كم، والإيريديوم/البلاتينيوم كل 80,000 - 100,000 كم).',
+                    warning: 'البلكات المقلدة تسبب تفتفة وضعف تسارع وقد تؤدي إلى تلف الكويلات.',
+                    steps: [
+                        'افصل فيش الكويلات وفك مساميرها والمحرك بارد تماماً.',
+                        'فك البلكات القديمة بمفتاح مغناطيسي مناسب.',
+                        'ركّب البلكات الجديدة بعزم معتدل دون إفراط ثم أعد تركيب الكويلات.'
+                    ]
+                },
+                {
+                    id: 'throttle_maf', title: 'تنظيف بوابة الهواء (الثروتل) وحساس MAF', branch: 'engine',
+                    intervalKm: 30000, intervalMonths: 18,
+                    specs: 'منظف بوابة هواء (Throttle Body Cleaner) + منظف إلكتروني خاص لحساس الهواء (MAF Cleaner).',
+                    warning: 'ممنوع رش منظف الكربريتر العادي على حساس الهواء (MAF) لأنه يتلفه فوراً.',
+                    steps: [
+                        'افصل أصبع البطارية السالب لتجنب اضطراب برمجة عداد الـ RPM.',
+                        'امسح الكربون حول بوابة الثروتل بقطعة قماش مبللة بالمنظف.',
+                        'رش حساس MAF بمنظفه الخاص عن بعد واتركه يجف 10 دقائق ثم أعد التركيب.'
+                    ]
+                },
+                {
+                    id: 'drive_belt', title: 'قاش المحرك (سير المجموعة)', branch: 'engine',
+                    intervalKm: 60000, intervalMonths: 36,
+                    specs: 'سير المجموعة الخارجي الذي يشغّل الدينمو وكمبروسر المكيف وطرمبة الماء.',
+                    warning: 'انقطاع السير يوقف شحن البطارية وتبريد المحرك فوراً؛ استبدله عند ظهور تشققات.',
+                    steps: [
+                        'افحص الجهة الداخلية للسير بحثاً عن تشققات أو تآكل أو صوت صرير.',
+                        'ارخِ بكرة الشداد، أخرج السير القديم وركب الجديد بنفس المسار.'
+                    ]
+                },
+                {
+                    id: 'fuel_filter', title: 'فلتر البنزين (مصفاة الوقود)', branch: 'engine',
+                    intervalKm: 60000, intervalMonths: 36,
+                    specs: 'مصفاة الوقود (داخل الخزان مع الفيت بمب أو خارجية حسب تصميم سيارتك).',
+                    warning: 'تجنب القيادة المتكررة وخزان الوقود شبه فارغ لحماية طرمبة البنزين من السخونة.',
+                    steps: [
+                        'نفّس ضغط الوقود وافصل البطارية قبل البدء.',
+                        'استبدل مصفاة الوقود والربلات المرفقة وتأكد من عدم وجود أي تسريب.'
+                    ]
+                },
+                {
+                    id: 'ac_filter_clean', title: 'تنظيف فلتر المكيف (الكابينة)', branch: 'cooling',
+                    intervalKm: 5000, intervalMonths: 2,
+                    specs: 'تنظيف دوري بالهواء في الصيف لإبقاء دفع هواء المكيف قوياً وحماية الثلاجة والكمبروسر.',
+                    warning: 'لا تغسل الفلتر بالماء وتأكد من اتجاه سهم تدفق الهواء (AIR FLOW) عند الإرجاع.',
+                    steps: [
+                        'افتح درج التابلوه الأمامي وانزع غطاء فتحة فلتر المكيف.',
+                        'اسحب الفلتر ونظفه بالهواء من الغبار ثم أعده بنفس الاتجاه.'
+                    ]
+                },
+                {
+                    id: 'ac_filter_replace', title: 'تبديل فلتر المكيف (الكابينة)', branch: 'cooling',
+                    intervalKm: 15000, intervalMonths: 12,
+                    specs: 'فلتر مكيف جديد (ورقي أو كربوني نشط) قبل بداية فصل الصيف.',
+                    warning: 'انسداد فلتر المكيف يضعف التبريد ويجهد مروحة المكيف الداخلية.',
+                    steps: [
+                        'افتح درج التابلوه وأخرج الفلتر القديم.',
+                        'ركّب الفلتر الجديد مع مراعاة اتجاه السهم وأغلق الغطاء بإحكام.'
+                    ]
+                },
+                {
+                    id: 'radiator_ext', title: 'غسل الراديتر من الخارج', branch: 'cooling',
+                    intervalKm: 0, intervalMonths: 6,
+                    specs: 'غسل خارجي بالماء العذب بضغط متوسط لإزالة الأتربة والحشرات وتحسين التبريد والمكيف.',
+                    warning: 'تأكد أن المحرك بارد تماماً، وتجنب تقريب مسدس الضغط العالي (الفارة) حتى لا تثني زعانف الألومنيوم.',
+                    steps: [
+                        'انتظر حتى يبرد المحرك تماماً قبل الغسل.',
+                        'وجّه خرطوم ماء بضغط متوسط من خلف الشبك الأمامي لإخراج الأتربة بين مكثف المكيف والراديتر.',
+                        'استمر بالغسل حتى يخرج الماء صافياً من أسفل السيارة.'
+                    ]
+                },
+                {
+                    id: 'radiator_int', title: 'سائل التبريد وتنظيف الراديتر الداخلي', branch: 'cooling',
+                    intervalKm: 60000, intervalMonths: 24,
+                    specs: 'سائل تبريد أصلي جاهز الخلط 50/50 مطابق لمواصفات سيارتك + ماء مقطر للغسيل الداخلي.',
+                    warning: 'خطر حروق شديدة: لا تفتح غطاء الراديتر إطلاقاً والمحرك ساخن! تجنب ماء الحنفية وفلاش التنظيف الكيميائي القوي.',
+                    steps: [
+                        'انتظر ساعتين حتى يبرد المحرك تماماً، ثم افتح الغطاء العلوي وصمام التفريغ السفلي وأفرغ السائل القديم.',
+                        'اغسل القربة الاحتياطية، واملأ الراديتر بماء مقطر وشغّل المحرك 10 دقائق مع فتح التدفئة ثم فرّغه بعد أن يبرد.',
+                        'املأ المنظومة بسائل التبريد الأصلي وفرّغ فقاعات الهواء جيداً ثم أغلق الغطاء بإحكام.'
+                    ]
+                },
+                {
+                    id: 'transmission_oil', title: 'زيت القير (ناقل الحركة)', branch: 'transmission',
+                    intervalKm: 40000, intervalMonths: 24,
+                    specs: '', warning: '', steps: []
+                },
+                {
+                    id: 'brakes_pads', title: 'البريكات (الدسكات والفحمات)', branch: 'transmission',
+                    intervalKm: 15000, intervalMonths: 12,
+                    specs: 'فحص كل 15,000 كم، وتُبدّل الفحمات عند وصول سماكتها إلى 3 ملم أو أقل.',
+                    warning: 'سماع صوت صفير معدني حاد عند الكبح يعني انتهاء الفحمات وضرورة التبديل الفوري لحماية الهوب.',
+                    steps: [
+                        'افحص سماكة بطانة الفحمات الأمامية والخلفية.',
+                        'تأكد من نعومة سطح الهوب (الدسك) وعدم وجود رجة عند الفرملة.'
+                    ]
+                },
+                {
+                    id: 'brake_fluid', title: 'زيت البريك (الفرامل DOT 3/4)', branch: 'transmission',
+                    intervalKm: 40000, intervalMonths: 24,
+                    specs: 'سائل فرامل أصلي DOT 3 أو DOT 4 حسب المكتوب على غطاء علبة الفرامل.',
+                    warning: 'زيت البريك يمتص الرطوبة بمرور الوقت مما يضعف الكبح ويؤثر على منظومة ABS.',
+                    steps: [
+                        'اسحب الزيت القديم من العلبة العلوية وأضف زيتاً جديداً من علبة محكمة الإغلاق.',
+                        'قم بتنسيم العجلات الأربع مع مراقبة مستوى العلبة باستمرار.'
+                    ]
+                },
+                {
+                    id: 'tires_fluids', title: 'فحص ضغط الإطارات ومستوى السوائل', branch: 'tires',
+                    intervalKm: 2000, intervalMonths: 1,
+                    specs: 'ضغط الإطارات حسب ملصق باب السائق (غالباً 32 - 35 PSI وهي باردة) + فحص قربة الراديتر وزيت البريك وماء المساحات.',
+                    warning: 'لا تفتح غطاء الراديتر والمحرك ساخن؛ اكتفِ بالنظر لمستوى السائل في القربة البلاستيكية.',
+                    steps: [
+                        'اضبط ضغط الإطارات الأربعة والاحتياطي صباحاً قبل المشي.',
+                        'تأكد أن سائل التبريد في القربة بين علامتي MIN و MAX.',
+                        'املأ خزان ماء المساحات وتفقد مستوى زيت البريك.'
+                    ]
+                },
+                {
+                    id: 'tire_rotation', title: 'تدوير الإطارات وفحص الميزانية', branch: 'tires',
+                    intervalKm: 15000, intervalMonths: 12,
+                    specs: 'تبديل مواقع الإطارات لضمان تآكل متساوٍ + فحص الترصيص (البلنص) وميزانية الأذرعة (اللاين).',
+                    warning: 'ظهور رجة في المقود على السرعات المتوسطة يعني حاجة الإطارات للترصيص الفوري.',
+                    steps: [
+                        'بدّل مواقع الإطارات وفق نمط الدفع الخاص بسيارتك.',
+                        'افحص البلنص وميزانية الأذرعة إذا لاحظت انحرافاً في المقود.'
+                    ]
+                },
+                {
+                    id: 'tire_replace', title: 'تبديل الإطارات (التواير)', branch: 'tires',
+                    intervalKm: 50000, intervalMonths: 36,
+                    specs: 'مقاس مطابق لملصق باب السائق. التبديل كل 50,000 كم أو 3 سنوات أيهما أسبق.',
+                    warning: 'تحقق دائماً من تاريخ الصنع (الأسبوع/السنة) المحفور على جانب الإطار وتجنب المخزن القديم.',
+                    steps: [
+                        'افحص عمق النقشة والتشققات الجانبية وتاريخ الصنع.',
+                        'استبدل الإطارات مع تبديل البلوف وعمل ترصيص وميزانية.'
+                    ]
+                },
+                {
+                    id: 'car_battery', title: 'فحص بطارية السيارة', branch: 'tires',
+                    intervalKm: 0, intervalMonths: 12,
+                    specs: 'بطارية مطابقة لأمبير سيارتك. عمرها الافتراضي في الأجواء الحارة 18 إلى 24 شهراً.',
+                    warning: 'ضعف البطارية يسبب صعوبة تشغيل صباحاً أو ظهور تنبيهات إلكترونية عشوائية.',
+                    steps: [
+                        'افحص جهد البطارية (12.6 فولت مطفأة، و13.8 - 14.4 فولت أثناء التشغيل).',
+                        'نظّف أقطاب البطارية من أي تكلسات وتأكد من ثبات القاعدة.'
+                    ]
+                },
+                {
+                    id: 'wiper_blades', title: 'مساحات الزجاج الأمامي', branch: 'tires',
+                    intervalKm: 0, intervalMonths: 12,
+                    specs: 'مساحات سيليكون أو مطاط عالي الجودة بالمقاس المناسب لسيارتك قبل موسم الأمطار.',
+                    warning: 'المساحات اليابسة تخدش الزجاج الأمامي بشكل دائم.',
+                    steps: [
+                        'ارفع ذراع المساحة، اضغط مشبك التثبيت واسحب المساحة القديمة.',
+                        'ركّب المساحة الجديدة حتى يثبت القفل وتأكد من سلاسة المسح مع الماء.'
+                    ]
+                }
+            ];
+
+            var INITIAL_CHECKLIST = [
+                { id: 'c_oil', title: 'تبديل زيت المحرك وفلتر الزيت الأصلي', desc: 'لبدء حساب المسافة من الصفر بزيت مضمون ومطابق لزوجة سيارتك.' },
+                { id: 'c_filters', title: 'تبديل فلتر هواء المحرك وفلتر المكيف', desc: 'يضمن أفضل عزم واستهلاك وقود وتبريد مثالي للمكيف.' },
+                { id: 'c_trans', title: 'فحص لون ولزوجة زيت القير', desc: 'وتغييره فوراً إذا كان داكناً أو مجهول موعد التبديل بالزيت المخصص.' },
+                { id: 'c_coolant', title: 'فحص سائل التبريد والتأكد من لونه', desc: 'التأكد أنه سائل تبريد أصلي خالٍ من الصدأ وليس ماء حنفية.' },
+                { id: 'c_brakes', title: 'فحص سمك البريكات وزيت الفرامل', desc: 'التأكد من سلامة الدسكات والفحمات ومستوى سائل الفرامل.' },
+                { id: 'c_tires', title: 'فحص تاريخ الإطارات وضبط الهواء', desc: 'مطابقة الضغط لملصق باب السائق بما في ذلك الإطار الاحتياطي.' },
+                { id: 'c_battery', title: 'فحص قوة البطارية وشحن الدينمو', desc: 'تجنباً لأي توقف مفاجئ في الأيام الحارة أو الباردة.' }
+            ];
+
+            // ==================== 2. SAFE STATE & HELPERS ====================
+            var appData = {
+                theme: 'dark',
+                activeVehicleId: null,
+                vehicles: []
+            };
+
+            var wizardMode = 'first';
+            var wizardDraft = {
+                carName: '',
+                odometer: '',
+                transmission: 'AT',
+                engineType: 'Petrol',
+                oilInterval: 5000,
+                items: {}
+            };
+
+            var activeView = 'maintenance';
+            var activeStatusFilter = 'all';
+            var activeBranchFilter = 'all';
+            var activeLogItemId = null;
+            var toastTimer = null;
+
+            function byId(id) { return document.getElementById(id); }
+
+            function getTodayStr() {
+                try {
+                    return new Date().toISOString().split('T')[0];
+                } catch (e) {
+                    return '2026-01-01';
+                }
+            }
+
+            function subtractMonthsStr(months) {
+                try {
+                    var d = new Date();
+                    d.setMonth(d.getMonth() - (Number(months) || 0));
+                    return d.toISOString().split('T')[0];
+                } catch (e) {
+                    return getTodayStr();
+                }
+            }
+
+            function fmtNum(n) {
+                var num = Number(n);
+                if (isNaN(num)) return '0';
+                try {
+                    return num.toLocaleString('en-US');
+                } catch (e) {
+                    return String(num);
+                }
+            }
+
+            function escHtml(str) {
+                return String(str == null ? '' : str)
+                    .replace(/&/g, '&amp;')
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;')
+                    .replace(/"/g, '&quot;');
+            }
+
+            function safeLoad() {
+                try {
+                    var raw = localStorage.getItem(STORAGE_KEY);
+                    if (!raw) return;
+                    var parsed = JSON.parse(raw);
+                    if (parsed && typeof parsed === 'object') {
+                        appData.theme = parsed.theme === 'light' ? 'light' : 'dark';
+                        appData.vehicles = Array.isArray(parsed.vehicles) ? parsed.vehicles : [];
+                        appData.activeVehicleId = parsed.activeVehicleId || null;
+                    }
+                } catch (e) {
+                    appData = { theme: 'dark', activeVehicleId: null, vehicles: [] };
+                }
+            }
+
+            function safeSave() {
+                try {
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(appData));
+                } catch (e) {
+                    // Storage unavailable or full; ignore safely
+                }
+            }
+
+            function getActiveVehicle() {
+                if (!appData.vehicles || !appData.vehicles.length) return null;
+                for (var i = 0; i < appData.vehicles.length; i++) {
+                    if (appData.vehicles[i].id === appData.activeVehicleId) return appData.vehicles[i];
+                }
+                appData.activeVehicleId = appData.vehicles[0].id;
+                return appData.vehicles[0];
+            }
+
+            function showToast(msg) {
+                var el = byId('toast');
+                var txt = byId('toastText');
+                if (!el || !txt) return;
+                txt.textContent = msg;
+                el.classList.add('show');
+                clearTimeout(toastTimer);
+                toastTimer = setTimeout(function () {
+                    el.classList.remove('show');
+                }, 2300);
+            }
+
+            // ==================== 3. THEME ====================
+            function applyTheme() {
+                var isLight = appData.theme === 'light';
+                document.documentElement.classList.toggle('light', isLight);
+                var meta = document.querySelector('meta[name="theme-color"]');
+                if (meta) meta.setAttribute('content', isLight ? '#f1f5f9' : '#0b1020');
+
+                var sw = byId('themeSwitchBtn');
+                var st = byId('themeStatusTxt');
+                if (sw) sw.classList.toggle('on', !isLight);
+                if (st) st.textContent = isLight ? 'الوضع الفاتح مُفعّل' : 'الوضع المظلم مُفعّل';
+            }
+
+            window.toggleTheme = function () {
+                appData.theme = appData.theme === 'light' ? 'dark' : 'light';
+                applyTheme();
+                safeSave();
+                showToast(appData.theme === 'dark' ? 'تم تفعيل الوضع المظلم' : 'تم تفعيل الوضع الفاتح');
+            };
+
+            // ==================== 4. 2-STEP ONBOARDING WIZARD ====================
+            function initWizardDraft(mode) {
+                wizardMode = mode;
+                var car = mode === 'reconfigure' ? getActiveVehicle() : null;
+                var today = getTodayStr();
+
+                wizardDraft = {
+                    carName: car ? (car.name || '') : '',
+                    odometer: (car && car.odometer > 0) ? String(car.odometer) : '',
+                    transmission: car ? (car.settings.transmission || 'AT') : 'AT',
+                    engineType: car ? (car.settings.engineType || 'Petrol') : 'Petrol',
+                    oilInterval: car ? (Number(car.settings.oilInterval) || 5000) : 5000,
+                    items: {}
+                };
+
+                // Initially NO button is pre-selected on any item (neutral 'unset' state)
+                for (var i = 0; i < BASE_ITEMS.length; i++) {
+                    wizardDraft.items[BASE_ITEMS[i].id] = { mode: 'unset', km: '', date: today };
+                }
+            }
+
+            window.openSetupWizard = function (mode) {
+                initWizardDraft(mode || 'first');
+                byId('mainAppShell').classList.add('hidden');
+                byId('setupWizard').classList.remove('hidden');
+
+                var titleEl = byId('wizardMainTitle');
+                var cancelBtn = byId('wizardCancelBtn');
+                if (mode === 'new') {
+                    titleEl.textContent = 'إضافة سيارة جديدة';
+                    cancelBtn.classList.remove('hidden');
+                } else if (mode === 'reconfigure') {
+                    titleEl.textContent = 'إعادة إعداد السيارة';
+                    cancelBtn.classList.remove('hidden');
+                } else {
+                    titleEl.textContent = 'إعداد ملف سيارتك';
+                    cancelBtn.classList.add('hidden');
+                }
+
+                byId('wizCarNameInput').value = wizardDraft.carName;
+                byId('wizOdometerInput').value = wizardDraft.odometer;
+                updateWizardStep1UI();
+                window.validateWizardStep1();
+                window.goToWizardStep(1);
+            };
+
+            window.cancelSetupWizard = function () {
+                if (!appData.vehicles.length) return;
+                byId('setupWizard').classList.add('hidden');
+                byId('mainAppShell').classList.remove('hidden');
+            };
+
+            window.pickBrand = function (prefix) {
+                var inp = byId('wizCarNameInput');
+                inp.value = prefix;
+                wizardDraft.carName = prefix;
+                inp.focus();
+                window.validateWizardStep1();
+            };
+
+            window.selectWizTrans = function (val) {
+                wizardDraft.transmission = val;
+                updateWizardStep1UI();
+            };
+
+            window.selectWizEngine = function (val) {
+                wizardDraft.engineType = val;
+                updateWizardStep1UI();
+            };
+
+            window.selectWizOil = function (val) {
+                wizardDraft.oilInterval = Number(val);
+                updateWizardStep1UI();
+            };
+
+            function updateWizardStep1UI() {
+                var transList = ['AT', 'CVT', 'DCT', 'MT'];
+                for (var i = 0; i < transList.length; i++) {
+                    var t = transList[i];
+                    var el = byId('wiz-trans-' + t);
+                    if (el) el.classList.toggle('selected', wizardDraft.transmission === t);
+                }
+                var engList = ['Petrol', 'Hybrid'];
+                for (var j = 0; j < engList.length; j++) {
+                    var e = engList[j];
+                    var elE = byId('wiz-eng-' + e);
+                    if (elE) elE.classList.toggle('selected', wizardDraft.engineType === e);
+                }
+                var oils = [5000, 8000, 10000];
+                for (var k = 0; k < oils.length; k++) {
+                    var o = oils[k];
+                    var elO = byId('wiz-oil-' + o);
+                    if (elO) elO.classList.toggle('selected', Number(wizardDraft.oilInterval) === o);
+                }
+            }
+
+            window.validateWizardStep1 = function () {
+                wizardDraft.carName = byId('wizCarNameInput').value;
+                var raw = byId('wizOdometerInput').value.trim();
+                var val = parseInt(raw, 10);
+                var ok = raw !== '' && !isNaN(val) && val >= 0;
+                wizardDraft.odometer = ok ? String(val) : '';
+                byId('wizNextBtn').disabled = !ok;
+                if (ok) byId('wizOdoErr').classList.add('hidden');
+                return ok;
+            };
+
+            window.goToWizardStep = function (step) {
+                if (step === 2 && !window.validateWizardStep1()) {
+                    byId('wizOdoErr').classList.remove('hidden');
+                    return;
+                }
+                if (step === 1) {
+                    byId('wizardStep1').classList.remove('hidden');
+                    byId('wizardStep2').classList.add('hidden');
+                    byId('wizBackBtn').classList.add('hidden');
+                    byId('wizNextBtn').classList.remove('hidden');
+                    byId('wizFinishBtn').classList.add('hidden');
+                    byId('wizardBar2').classList.remove('active');
+                    byId('wizardStepPill').textContent = '1 / 2';
+                    byId('wizardStepSubtitle').textContent = '1/2 • بيانات السيارة والعداد';
+                } else {
+                    var label = wizardDraft.carName.trim() || 'سيارتي';
+                    byId('wizardStep1').classList.add('hidden');
+                    byId('wizardStep2').classList.remove('hidden');
+                    byId('wizBackBtn').classList.remove('hidden');
+                    byId('wizNextBtn').classList.add('hidden');
+                    byId('wizFinishBtn').classList.remove('hidden');
+                    byId('wizardBar2').classList.add('active');
+                    byId('wizardStepPill').textContent = '2 / 2';
+                    byId('wizardStepSubtitle').textContent = label + ' • العداد: ' + fmtNum(wizardDraft.odometer) + ' كم';
+                    renderWizardStep2();
+                }
+                byId('wizardBody').scrollTop = 0;
+            };
+
+            function buildWizardCardHtml(item) {
+                var entry = wizardDraft.items[item.id] || { mode: 'unset', km: '', date: getTodayStr() };
+                var isKm = item.intervalKm > 0;
+                var intKm = item.id === 'engine_oil' ? wizardDraft.oilInterval : item.intervalKm;
+                var intLabel = isKm ? ('كل ' + fmtNum(intKm) + ' كم') : ('كل ' + item.intervalMonths + ' شهر');
+
+                var cCls = entry.mode === 'custom' ? 'wiz-tbtn active-custom' : 'wiz-tbtn';
+                var nCls = entry.mode === 'now' ? 'wiz-tbtn active-now' : 'wiz-tbtn';
+                var uCls = entry.mode === 'unknown' ? 'wiz-tbtn active-unknown' : 'wiz-tbtn';
+
+                var extra = '';
+                if (entry.mode === 'custom') {
+                    if (isKm) {
+                        var sug = Math.max(0, (parseInt(wizardDraft.odometer, 10) || 0) - 2000);
+                        extra = '<div class="wiz-inline-box"><div class="wiz-inline-row">' +
+                            '<span style="font-size:11px;font-weight:700;color:var(--text-secondary);">عداد آخر تبديل:</span>' +
+                            '<input type="number" id="wiz-inp-' + item.id + '" inputmode="numeric" min="0" class="wiz-inline-input tabular" value="' + escHtml(entry.km) + '" placeholder="مثلاً: ' + sug + '" oninput="setWizItemKm(\'' + item.id + '\', this.value)">' +
+                            '<span style="font-size:11px;font-weight:700;color:var(--text-muted);">كم</span>' +
+                            '</div></div>';
+                    } else {
+                        extra = '<div class="wiz-inline-box">' +
+                            '<div class="wiz-inline-row" style="margin-bottom:7px;">' +
+                            '<span style="font-size:11px;font-weight:700;color:var(--text-secondary);">تاريخ آخر مرة:</span>' +
+                            '<input type="date" id="wiz-inp-' + item.id + '" class="wiz-inline-input" value="' + escHtml(entry.date || getTodayStr()) + '" onchange="setWizItemDate(\'' + item.id + '\', this.value)">' +
+                            '</div>' +
+                            '<div style="display:flex;align-items:center;gap:6px;">' +
+                            '<span style="font-size:10px;color:var(--text-muted);font-weight:700;">اختصار:</span>' +
+                            '<button type="button" class="brand-chip" onclick="setWizMonthsAgo(\'' + item.id + '\',3)">قبل 3 أشهر</button>' +
+                            '<button type="button" class="brand-chip" onclick="setWizMonthsAgo(\'' + item.id + '\',6)">قبل 6 أشهر</button>' +
+                            '<button type="button" class="brand-chip" onclick="setWizMonthsAgo(\'' + item.id + '\',12)">قبل سنة</button>' +
+                            '</div></div>';
+                    }
+                } else if (entry.mode === 'now') {
+                    extra = '<div class="wiz-status-hint hint-green">✓ سيتم حساب الموعد القادم بدءاً من اليوم</div>';
+                } else if (entry.mode === 'unknown') {
+                    extra = '<div class="wiz-status-hint hint-red">! سيتم تذكيرك بفحص هذه القطعة فوراً</div>';
+                }
+
+                return '<div class="wiz-item-top">' +
+                    '<h4 class="wiz-item-name">' + escHtml(item.title) + '</h4>' +
+                    '<span class="wiz-item-interval tabular">' + intLabel + '</span>' +
+                    '</div>' +
+                    '<div class="wiz-toggle-row">' +
+                    '<button type="button" class="' + cCls + '" onclick="setWizMode(\'' + item.id + '\',\'custom\')">' + (isKm ? 'تحديد العداد' : 'تحديد التاريخ') + '</button>' +
+                    '<button type="button" class="' + nCls + '" onclick="setWizMode(\'' + item.id + '\',\'now\')">بدلته الآن</button>' +
+                    '<button type="button" class="' + uCls + '" onclick="setWizMode(\'' + item.id + '\',\'unknown\')">لا أعلم</button>' +
+                    '</div>' + extra;
+            }
+
+            function renderWizardStep2() {
+                var container = byId('wizardItemsContainer');
+                var html = '';
+                for (var b = 0; b < BRANCH_ORDER.length; b++) {
+                    var br = BRANCH_ORDER[b];
+                    html += '<div class="wiz-group-head">' +
+                        '<span class="cat-icon cat-' + br + '" style="width:24px;height:24px;border-radius:8px;">' + BRANCH_SVGS[br] + '</span>' +
+                        '<span>' + BRANCH_LABELS[br] + '</span></div>';
+                    for (var i = 0; i < BASE_ITEMS.length; i++) {
+                        var item = BASE_ITEMS[i];
+                        if (item.branch !== br) continue;
+                        var m = (wizardDraft.items[item.id] && wizardDraft.items[item.id].mode) || 'unset';
+                        var stateCls = m !== 'unset' ? (' state-' + m) : '';
+                        html += '<div id="wiz-card-' + item.id + '" class="wiz-item-card' + stateCls + '">' + buildWizardCardHtml(item) + '</div>';
+                    }
+                }
+                container.innerHTML = html;
+            }
+
+            window.setWizMode = function (itemId, mode) {
+                var entry = wizardDraft.items[itemId] || { mode: 'unset', km: '', date: getTodayStr() };
+                entry.mode = mode;
+                if (mode === 'now') {
+                    entry.km = wizardDraft.odometer;
+                    entry.date = getTodayStr();
+                } else if (mode === 'unknown') {
+                    entry.km = '';
+                }
+                wizardDraft.items[itemId] = entry;
+
+                var card = byId('wiz-card-' + itemId);
+                var item = null;
+                for (var i = 0; i < BASE_ITEMS.length; i++) {
+                    if (BASE_ITEMS[i].id === itemId) { item = BASE_ITEMS[i]; break; }
+                }
+                if (card && item) {
+                    card.className = 'wiz-item-card state-' + mode;
+                    card.innerHTML = buildWizardCardHtml(item);
+                    if (mode === 'custom') {
+                        setTimeout(function () {
+                            var inp = byId('wiz-inp-' + itemId);
+                            if (inp) inp.focus();
+                        }, 40);
+                    }
+                }
+            };
+
+            window.setWizItemKm = function (itemId, val) {
+                if (!wizardDraft.items[itemId]) return;
+                wizardDraft.items[itemId].km = val;
+                wizardDraft.items[itemId].mode = 'custom';
+            };
+
+            window.setWizItemDate = function (itemId, val) {
+                if (!wizardDraft.items[itemId]) return;
+                wizardDraft.items[itemId].date = val;
+                wizardDraft.items[itemId].mode = 'custom';
+            };
+
+            window.setWizMonthsAgo = function (itemId, months) {
+                if (!wizardDraft.items[itemId]) return;
+                var dt = subtractMonthsStr(months);
+                wizardDraft.items[itemId].date = dt;
+                wizardDraft.items[itemId].mode = 'custom';
+                var inp = byId('wiz-inp-' + itemId);
+                if (inp) inp.value = dt;
+            };
+
+            window.wizardBulkSet = function (mode) {
+                var today = getTodayStr();
+                for (var i = 0; i < BASE_ITEMS.length; i++) {
+                    var id = BASE_ITEMS[i].id;
+                    if (mode === 'unknown') {
+                        wizardDraft.items[id] = { mode: 'unknown', km: '', date: today };
+                    } else if (mode === 'now') {
+                        wizardDraft.items[id] = { mode: 'now', km: wizardDraft.odometer, date: today };
+                    }
+                }
+                renderWizardStep2();
+                showToast(mode === 'now' ? 'تم تعيين الكل كـ (بدلته الآن)' : 'تم تعيين الكل كـ (لا أعلم)');
+            };
+
+            window.finishSetupWizard = function () {
+                var odo = parseInt(wizardDraft.odometer, 10) || 0;
+                var name = wizardDraft.carName.trim() || ('سيارتي ' + (appData.vehicles.length + 1));
+                var today = getTodayStr();
+
+                var car;
+                if (wizardMode === 'reconfigure' && getActiveVehicle()) {
+                    car = getActiveVehicle();
+                    car.name = name;
+                    car.odometer = odo;
+                    car.settings = {
+                        transmission: wizardDraft.transmission,
+                        engineType: wizardDraft.engineType,
+                        oilInterval: Number(wizardDraft.oilInterval) || 5000
+                    };
+                } else {
+                    car = {
+                        id: 'car_' + Date.now(),
+                        name: name,
+                        odometer: odo,
+                        settings: {
+                            transmission: wizardDraft.transmission,
+                            engineType: wizardDraft.engineType,
+                            oilInterval: Number(wizardDraft.oilInterval) || 5000
+                        },
+                        records: {},
+                        customItems: [],
+                        history: [],
+                        checklist: {}
+                    };
+                    appData.vehicles.push(car);
+                    appData.activeVehicleId = car.id;
+                }
+
+                for (var i = 0; i < BASE_ITEMS.length; i++) {
+                    var item = BASE_ITEMS[i];
+                    var entry = wizardDraft.items[item.id] || { mode: 'unknown' };
+                    var isKm = item.intervalKm > 0;
+
+                    if (entry.mode === 'now') {
+                        car.records[item.id] = { lastKm: odo, lastDate: today, unknown: false, notes: '' };
+                    } else if (entry.mode === 'custom') {
+                        var parsedKm = parseInt(entry.km, 10);
+                        if (isKm && !isNaN(parsedKm) && parsedKm >= 0) {
+                            car.records[item.id] = { lastKm: parsedKm, lastDate: today, unknown: false, notes: '' };
+                        } else if (!isKm && entry.date) {
+                            car.records[item.id] = { lastKm: odo, lastDate: entry.date, unknown: false, notes: '' };
+                        } else {
+                            car.records[item.id] = { lastKm: 0, lastDate: '2020-01-01', unknown: true, notes: '' };
+                        }
+                    } else {
+                        car.records[item.id] = { lastKm: 0, lastDate: '2020-01-01', unknown: true, notes: '' };
+                    }
+                }
+
+                safeSave();
+                byId('setupWizard').classList.add('hidden');
+                byId('mainAppShell').classList.remove('hidden');
+                refreshAllUI();
+                window.switchView('maintenance');
+                showToast('تم حفظ ملف (' + name + ') بنجاح ✓');
+            };
+
+            // ==================== 5. DYNAMIC ITEMS & STATUS COMPUTATION ====================
+            function getAllItems() {
+                var car = getActiveVehicle();
+                if (!car) return [];
+                var trans = (car.settings && car.settings.transmission) || 'AT';
+                var eng = (car.settings && car.settings.engineType) || 'Petrol';
+                var oilInt = Number((car.settings && car.settings.oilInterval) || 5000);
+
+                var list = [];
+                for (var i = 0; i < BASE_ITEMS.length; i++) {
+                    var src = BASE_ITEMS[i];
+                    var item = {
+                        id: src.id,
+                        title: src.title,
+                        branch: src.branch,
+                        intervalKm: src.intervalKm,
+                        intervalMonths: src.intervalMonths,
+                        specs: src.specs,
+                        warning: src.warning,
+                        steps: src.steps.slice()
+                    };
+
+                    if (item.id === 'engine_oil') {
+                        item.intervalKm = oilInt;
+                        item.intervalMonths = oilInt >= 8000 ? 6 : 4;
+                        if (eng === 'Hybrid') {
+                            item.specs += ' • في سيارات الهايبرد يُنصح بلزوجة خفيفة (0W-20 أو 0W-16) لتسهيل التشغيل المتكرر.';
+                        }
+                    }
+
+                    if (item.id === 'transmission_oil') {
+                        if (trans === 'CVT') {
+                            item.specs = 'قير CVT: استخدم حصراً زيت CVT الأصلي المطابق لمواصفات سيارتك (مثل NS-3 أو CVT-FE). الكمية غالباً 4 إلى 5 لتر تفريغ وتعبئة.';
+                            item.warning = 'تحذير هام: وضع زيت قير أوتوماتيك اعتيادي (ATF) يدمر قير CVT فوراً! يُنصح بالتفريغ من الصرة والتعبئة فقط.';
+                            item.steps = [
+                                'افتح صرة تفريغ زيت القير والمحرك دافئ قليلاً وقس كمية الزيت الخارج بدقة.',
+                                'أضف نفس الكمية تماماً من زيت CVT الأصلي الموصى به لسيارتك.',
+                                'شغّل المحرك وحرك عصا القير بين جميع الغيارات وتأكد من عدم وجود تهريب.'
+                            ];
+                        } else if (trans === 'DCT') {
+                            item.specs = 'قير دبل كلتش (DCT): يستخدم زيت ناقل حركة ثنائي القابض (DCTF) مخصص لتحمل الحرارة والاحتكاك.';
+                            item.warning = 'قير DCT حساس جداً لنوع الزيت ومستواه؛ التزم بزيت الوكالة الأصلي.';
+                            item.steps = [
+                                'فرّغ زيت القير القديم عبر صرة التصريف السفلية.',
+                                'أضف زيت DCTF الأصلي بالكمية المحددة واضبط المستوى وفق درجة حرارة القير.'
+                            ];
+                        } else if (trans === 'MT') {
+                            item.specs = 'قير عادي (MT): يستخدم زيت تروس يدوي (MTF / GL-4) باللزوجة المحددة (غالباً 75W-85 أو 75W-90).';
+                            item.warning = 'تجنب زيوت GL-5 في القير الذي يتطلب GL-4 لحماية نحاسات التزامن.',
+                            item.steps = [
+                                'افتح صرة التعبئة الجانبية أولاً ثم افتح صرة التفريغ السفلية.',
+                                'فرّغ الزيت القديم وأغلق الصرة السفلية ثم املأ الزيت الجديد حتى يقطر من فتحة التعبئة.'
+                            ];
+                        } else {
+                            item.specs = 'أوتوماتيك اعتيادي (AT): زيت ناقل حركة أوتوماتيك (ATF) مطابق لمواصفات سيارتك (مثل Matic S/D أو ATF WS أو Dexron VI).';
+                            item.warning = 'تأكد أن الزيت أصلي ومطابق لتصنيف سيارتك، وتجنب غسل القير بالماكينة للسيارات ذات الممشى العالي.';
+                            item.steps = [
+                                'افتح صرة تفريغ زيت القير السفلية وقس كمية الزيت الخارج.',
+                                'أغلق الصرة وأضف نفس الكمية من زيت ATF الأصلي.',
+                                'شغّل المحرك وحرك عصا القير بين (P-R-N-D) ثم افحص المستوى.'
+                            ];
+                        }
+                    }
+
+                    if (item.id === 'radiator_int' && eng === 'Hybrid') {
+                        item.title = 'سائل تبريد المحرك والإنفرتر (هايبرد)';
+                        item.specs += ' • تنبيه هايبرد: تحتوي سيارتك على دورتي تبريد (المحرك + الإنفرتر)؛ افحص مستوى القربتين معاً.';
+                    }
+
+                    if (item.id === 'brakes_pads' && eng === 'Hybrid') {
+                        item.specs += ' • ميزة الهايبرد: بفضل الكبح المتجدد تدوم الفحمات لفترة أطول، ويُنصح بتشحيم مسامير الكليبر دورياً.';
+                    }
+
+                    list.push(item);
+                }
+
+                var customs = car.customItems || [];
+                for (var c = 0; c < customs.length; c++) {
+                    list.push(customs[c]);
+                }
+                return list;
+            }
+
+            function computeStatus(item) {
+                var car = getActiveVehicle();
+                var rec = (car && car.records && car.records[item.id]) || { lastKm: 0, lastDate: '2020-01-01', unknown: true, notes: '' };
+                var intKm = Number(item.intervalKm) || 0;
+                var intMo = Number(item.intervalMonths) || 12;
+
+                if (rec.unknown) {
+                    return { rec: rec, isUnknown: true, nextDueKm: null, remainingKm: null, remainingDays: -1, nextDateStr: 'غير محدد', percent: 100, status: 'overdue' };
+                }
+
+                var odo = car ? (Number(car.odometer) || 0) : 0;
+                var nextDueKm = intKm > 0 ? (Number(rec.lastKm) || 0) + intKm : null;
+                var remainingKm = nextDueKm !== null ? nextDueKm - odo : null;
+
+                var lastDt = new Date(rec.lastDate || getTodayStr());
+                if (isNaN(lastDt.getTime())) lastDt = new Date();
+                var nextDt = new Date(lastDt.getTime());
+                nextDt.setMonth(nextDt.getMonth() + intMo);
+                var remainingDays = Math.ceil((nextDt.getTime() - Date.now()) / 86400000);
+                var nextDateStr = nextDt.toISOString().split('T')[0];
+
+                var pct = 0;
+                if (intKm > 0) {
+                    pct = Math.round(((odo - (Number(rec.lastKm) || 0)) / intKm) * 100);
+                } else {
+                    var totalDays = intMo * 30;
+                    pct = Math.round(((totalDays - remainingDays) / totalDays) * 100);
+                }
+                if (pct < 0) pct = 0;
+                if (pct > 100) pct = 100;
+
+                var soonKm = intKm > 0 ? Math.max(500, intKm * 0.15) : 0;
+                var st = 'ok';
+                if ((remainingKm !== null && remainingKm <= 0) || remainingDays <= 0) {
+                    st = 'overdue';
+                } else if ((remainingKm !== null && remainingKm <= soonKm) || remainingDays <= 15) {
+                    st = 'soon';
+                }
+
+                return { rec: rec, isUnknown: false, nextDueKm: nextDueKm, remainingKm: remainingKm, remainingDays: remainingDays, nextDateStr: nextDateStr, percent: pct, status: st };
+            }
+
+            // ==================== 6. DASHBOARD & NAVIGATION ====================
+            function refreshAllUI() {
+                updateCockpitUI();
+                renderMaintenanceList();
+                renderChecklist();
+                renderHistory();
+                renderSettingsUI();
+            }
+
+            function updateCockpitUI() {
+                var car = getActiveVehicle();
+                if (!car) return;
+                byId('activeCarNameBadge').textContent = car.name || 'سيارتي';
+                var engTxt = car.settings.engineType === 'Hybrid' ? ' • هايبرد' : '';
+                byId('activeCarSpecsBadge').textContent = '(' + (car.settings.transmission || 'AT') + engTxt + ')';
+                byId('odometerDisplay').textContent = fmtNum(car.odometer);
+            }
+
+            function updateHealthRing(counts) {
+                var total = counts.all || 1;
+                var score = Math.round(((counts.ok + counts.soon * 0.65) / total) * 100);
+                if (score < 0) score = 0;
+                if (score > 100) score = 100;
+                var circ = 138.23;
+                var circle = byId('healthRingCircle');
+                var pct = byId('healthPercentText');
+                if (circle) {
+                    circle.setAttribute('stroke-dashoffset', String(circ - (score / 100) * circ));
+                    circle.setAttribute('stroke', score >= 80 ? '#10b981' : (score >= 55 ? '#f59e0b' : '#e11d48'));
+                }
+                if (pct) pct.textContent = score + '%';
+            }
+
+            window.switchView = function (viewName) {
+                activeView = viewName;
+                var views = document.querySelectorAll('.app-view');
+                for (var i = 0; i < views.length; i++) views[i].classList.add('hidden');
+                var target = byId('view-' + viewName);
+                if (target) target.classList.remove('hidden');
+
+                var navs = document.querySelectorAll('.nav-btn');
+                for (var j = 0; j < navs.length; j++) {
+                    navs[j].classList.toggle('active', navs[j].getAttribute('data-nav') === viewName);
+                }
+
+                if (viewName === 'maintenance') renderMaintenanceList();
+                if (viewName === 'checklist') renderChecklist();
+                if (viewName === 'history') renderHistory();
+                if (viewName === 'settings') renderSettingsUI();
+                window.scrollTo(0, 0);
+            };
+
+            window.incrementOdometer = function (delta) {
+                var car = getActiveVehicle();
+                if (!car) return;
+                car.odometer = (Number(car.odometer) || 0) + delta;
+                safeSave();
+                updateCockpitUI();
+                renderMaintenanceList();
+                showToast('تمت إضافة +' + fmtNum(delta) + ' كم');
+            };
+
+            window.openOdometerModal = function () {
+                var car = getActiveVehicle();
+                if (!car) return;
+                byId('odoModalInp').value = car.odometer;
+                openModal('odometerModal');
+                setTimeout(function () { byId('odoModalInp').focus(); }, 60);
+            };
+
+            window.saveOdometerModal = function () {
+                var car = getActiveVehicle();
+                if (!car) return;
+                var val = parseInt(byId('odoModalInp').value, 10);
+                if (isNaN(val) || val < 0) {
+                    showToast('يرجى إدخال رقم عداد صحيح');
+                    return;
+                }
+                car.odometer = val;
+                safeSave();
+                updateCockpitUI();
+                closeModal('odometerModal');
+                renderMaintenanceList();
+                showToast('تم تحديث العداد إلى ' + fmtNum(val) + ' كم');
+            };
+
+            window.setStatusFilter = function (st) {
+                activeStatusFilter = st;
+                renderMaintenanceList();
+            };
+
+            window.setBranchFilter = function (br) {
+                activeBranchFilter = br;
+                var chips = document.querySelectorAll('.branch-chip');
+                for (var i = 0; i < chips.length; i++) {
+                    chips[i].classList.toggle('active', chips[i].getAttribute('data-branch') === br);
+                }
+                renderMaintenanceList();
+            };
+
+            window.renderMaintenanceList = function () {
+                var items = getAllItems();
+                var searchEl = byId('searchInput');
+                var q = searchEl ? searchEl.value.trim().toLowerCase() : '';
+                var counts = { all: items.length, overdue: 0, soon: 0, ok: 0 };
+                var enriched = [];
+
+                for (var i = 0; i < items.length; i++) {
+                    var info = computeStatus(items[i]);
+                    counts[info.status]++;
+                    enriched.push({ item: items[i], info: info });
+                }
+
+                updateHealthRing(counts);
+
+                byId('cnt-all').textContent = '(' + counts.all + ')';
+                byId('cnt-overdue').textContent = '(' + counts.overdue + ')';
+                byId('cnt-soon').textContent = '(' + counts.soon + ')';
+                byId('cnt-ok').textContent = '(' + counts.ok + ')';
+
+                var sAll = byId('stat-all');
+                var sOver = byId('stat-overdue');
+                var sSoon = byId('stat-soon');
+                var sOk = byId('stat-ok');
+
+                sAll.className = 'status-pill tabular' + (activeStatusFilter === 'all' ? ' active-all' : '');
+                sOver.className = 'status-pill tabular' + (activeStatusFilter === 'overdue' ? ' active-overdue' : (counts.overdue > 0 ? ' alert-overdue' : ''));
+                sSoon.className = 'status-pill tabular' + (activeStatusFilter === 'soon' ? ' active-soon' : (counts.soon > 0 ? ' alert-soon' : ''));
+                sOk.className = 'status-pill tabular' + (activeStatusFilter === 'ok' ? ' active-ok' : ' alert-ok');
+
+                var orderMap = { overdue: 0, soon: 1, ok: 2 };
+                enriched.sort(function (a, b) { return orderMap[a.info.status] - orderMap[b.info.status]; });
+
+                var html = '';
+                for (var j = 0; j < enriched.length; j++) {
+                    var item = enriched[j].item;
+                    var info = enriched[j].info;
+                    if (activeStatusFilter !== 'all' && info.status !== activeStatusFilter) continue;
+                    if (activeBranchFilter !== 'all' && item.branch !== activeBranchFilter) continue;
+                    if (q && item.title.toLowerCase().indexOf(q) === -1 && (item.specs || '').toLowerCase().indexOf(q) === -1) continue;
+
+                    var badgeCls = 'badge-ok';
+                    var badgeTxt = 'سليم';
+                    var fillCls = 'fill-ok';
+                    var cardBorder = '';
+                    var txtCls = 'txt-ok';
+
+                    if (info.status === 'overdue') {
+                        badgeCls = 'badge-overdue';
+                        badgeTxt = info.isUnknown ? 'غير معروف' : 'مطلوب فوراً';
+                        fillCls = 'fill-overdue';
+                        cardBorder = ' border-overdue';
+                        txtCls = 'txt-overdue';
+                    } else if (info.status === 'soon') {
+                        badgeCls = 'badge-soon';
+                        badgeTxt = 'قريباً';
+                        fillCls = 'fill-soon';
+                        cardBorder = ' border-soon';
+                        txtCls = 'txt-soon';
+                    }
+
+                    var remTxt = '';
+                    var nextTxt = '';
+                    var lastTxt = '';
+                    if (info.isUnknown) {
+                        remTxt = 'يحتاج فحصاً أو تسجيل آخر تبديل';
+                        nextTxt = 'غير محدد';
+                        lastTxt = 'آخر صيانة: غير معروف';
+                    } else if (info.remainingKm !== null) {
+                        remTxt = info.remainingKm <= 0 ? ('متأخر بـ ' + fmtNum(Math.abs(info.remainingKm)) + ' كم') : ('متبقي ' + fmtNum(info.remainingKm) + ' كم');
+                        nextTxt = 'القادم: ' + fmtNum(info.nextDueKm) + ' كم';
+                        lastTxt = 'آخر صيانة: ' + fmtNum(info.rec.lastKm) + ' كم';
+                    } else {
+                        remTxt = info.remainingDays <= 0 ? 'انتهت المدة الزمنية' : ('متبقي ' + info.remainingDays + ' يوم');
+                        nextTxt = info.nextDateStr;
+                        lastTxt = 'آخر صيانة: ' + info.rec.lastDate;
+                    }
+
+                    var intervalTxt = item.intervalKm > 0 ? ('كل ' + fmtNum(item.intervalKm) + ' كم') : ('كل ' + item.intervalMonths + ' شهر');
+                    var isCustom = item.id.indexOf('custom_') === 0;
+                    var brKey = BRANCH_SVGS[item.branch] ? item.branch : 'custom';
+
+                    html += '<article class="m-card' + cardBorder + '">' +
+                        '<div class="m-card-head">' +
+                        '<div class="m-card-left">' +
+                        '<div class="cat-icon cat-' + brKey + '">' + BRANCH_SVGS[brKey] + '</div>' +
+                        '<div style="min-width:0;">' +
+                        '<h3 class="m-title">' + escHtml(item.title) + '</h3>' +
+                        '<div class="m-meta tabular">' + intervalTxt + ' • ' + lastTxt + '</div>' +
+                        '</div></div>' +
+                        '<span class="status-badge ' + badgeCls + '">' + badgeTxt + '</span>' +
+                        '</div>' +
+                        '<div class="progress-info">' +
+                        '<span class="' + txtCls + ' tabular truncate">' + remTxt + '</span>' +
+                        '<span class="tabular" style="color:var(--text-muted);font-weight:600;flex-shrink:0;">' + nextTxt + '</span>' +
+                        '</div>' +
+                        '<div class="progress-track"><div class="progress-fill ' + fillCls + '" style="width:' + info.percent + '%;"></div></div>' +
+                        '<div class="m-actions">' +
+                        '<button type="button" class="m-btn m-btn-guide" onclick="openGuideModal(\'' + item.id + '\')">ماذا أفعل؟</button>' +
+                        '<button type="button" class="m-btn m-btn-done" onclick="openLogModal(\'' + item.id + '\')">✓ تمت الصيانة</button>' +
+                        (isCustom ? '<button type="button" class="m-btn-del" onclick="deleteCustomItem(\'' + item.id + '\')" title="حذف">✕</button>' : '') +
+                        '</div></article>';
+                }
+
+                if (!html) {
+                    html = '<div class="card" style="padding:28px 16px;text-align:center;">' +
+                        '<div style="font-size:14px;font-weight:800;margin-bottom:4px;">لا توجد بنود مطابقة</div>' +
+                        '<div style="font-size:12px;color:var(--text-muted);">جرّب تغيير الفلتر أو إضافة صيانة مخصصة من زر (+)</div>' +
+                        '</div>';
+                }
+                byId('maintenanceGrid').innerHTML = html;
+            };
+
+            // ==================== 7. GUIDE & SERVICE LOGGING ====================
+            window.openGuideModal = function (itemId) {
+                var items = getAllItems();
+                var item = null;
+                for (var i = 0; i < items.length; i++) {
+                    if (items[i].id === itemId) { item = items[i]; break; }
+                }
+                if (!item) return;
+
+                byId('guideCatBadge').textContent = BRANCH_LABELS[item.branch] || 'عام';
+                byId('guideTitle').textContent = item.title;
+                byId('guideKm').textContent = item.intervalKm > 0 ? ('كل ' + fmtNum(item.intervalKm) + ' كم') : 'تذكير زمني فقط';
+                byId('guideMonths').textContent = 'أو كل ' + item.intervalMonths + ' شهر';
+                byId('guideSpecs').textContent = item.specs || 'لا توجد مواصفات إضافية.';
+
+                var warnWrap = byId('guideWarnWrap');
+                if (item.warning) {
+                    byId('guideWarn').textContent = item.warning;
+                    warnWrap.classList.remove('hidden');
+                } else {
+                    warnWrap.classList.add('hidden');
+                }
+
+                var steps = (item.steps && item.steps.length) ? item.steps : ['نفّذ الصيانة لدى فني موثوق ثم اضغط «تمت الصيانة».'];
+                var sHtml = '';
+                for (var s = 0; s < steps.length; s++) {
+                    sHtml += '<li>' + escHtml(steps[s]) + '</li>';
+                }
+                byId('guideSteps').innerHTML = sHtml;
+
+                byId('guideDoneBtn').onclick = function () {
+                    closeModal('guideModal');
+                    window.openLogModal(item.id);
+                };
+                openModal('guideModal');
+            };
+
+            window.openLogModal = function (itemId) {
+                var car = getActiveVehicle();
+                var items = getAllItems();
+                var item = null;
+                for (var i = 0; i < items.length; i++) {
+                    if (items[i].id === itemId) { item = items[i]; break; }
+                }
+                if (!car || !item) return;
+
+                activeLogItemId = itemId;
+                byId('logItemTitle').textContent = item.title + ' • ' + car.name;
+                byId('logKmInp').value = car.odometer;
+                byId('logDateInp').value = getTodayStr();
+                byId('logCostInp').value = '';
+                byId('logNotesInp').value = '';
+                byId('logAddHistChk').checked = true;
+                openModal('logModal');
+            };
+
+            window.saveServiceLog = function () {
+                var car = getActiveVehicle();
+                if (!car || !activeLogItemId) return;
+                var items = getAllItems();
+                var item = null;
+                for (var i = 0; i < items.length; i++) {
+                    if (items[i].id === activeLogItemId) { item = items[i]; break; }
+                }
+
+                var km = parseInt(byId('logKmInp').value, 10);
+                var dt = byId('logDateInp').value;
+                var cost = parseInt(byId('logCostInp').value, 10) || 0;
+                var notes = byId('logNotesInp').value.trim();
+                var addHist = byId('logAddHistChk').checked;
+
+                if (isNaN(km) || km < 0 || !dt) {
+                    showToast('يرجى إدخال العداد والتاريخ بشكل صحيح');
+                    return;
+                }
+
+                car.records[activeLogItemId] = { lastKm: km, lastDate: dt, unknown: false, notes: notes };
+                if (km > car.odometer) {
+                    car.odometer = km;
+                    updateCockpitUI();
+                }
+
+                if (addHist && item) {
+                    car.history.unshift({
+                        id: 'log_' + Date.now(),
+                        itemId: item.id,
+                        title: item.title,
+                        km: km,
+                        date: dt,
+                        cost: cost,
+                        notes: notes
+                    });
+                }
+
+                safeSave();
+                closeModal('logModal');
+                renderMaintenanceList();
+                showToast('تم تسجيل الصيانة وتحديث الموعد القادم ✓');
+            };
+
+            // ==================== 8. CUSTOM ITEMS ====================
+            window.openCustomModal = function () {
+                byId('custTitleInp').value = '';
+                byId('custBranchInp').value = 'custom';
+                byId('custKmInp').value = '10000';
+                byId('custMonthsInp').value = '12';
+                byId('custNotesInp').value = '';
+                openModal('customModal');
+            };
+
+            window.saveCustomItem = function () {
+                var car = getActiveVehicle();
+                if (!car) return;
+                var title = byId('custTitleInp').value.trim();
+                var branch = byId('custBranchInp').value || 'custom';
+                var km = parseInt(byId('custKmInp').value, 10) || 0;
+                var mo = parseInt(byId('custMonthsInp').value, 10) || 12;
+                var notes = byId('custNotesInp').value.trim();
+
+                if (!title) {
+                    showToast('يرجى كتابة اسم البند أولاً');
+                    return;
+                }
+
+                var newId = 'custom_' + Date.now();
+                car.customItems.push({
+                    id: newId,
+                    title: title,
+                    branch: branch,
+                    intervalKm: km,
+                    intervalMonths: mo,
+                    specs: notes || 'بند صيانة مخصص.',
+                    warning: '',
+                    steps: notes ? [notes] : ['نفّذ هذا الإجراء في موعده ثم اضغط «تمت الصيانة».']
+                });
+                car.records[newId] = { lastKm: car.odometer, lastDate: getTodayStr(), unknown: false, notes: '' };
+                safeSave();
+                closeModal('customModal');
+                window.setBranchFilter('all');
+                showToast('تمت إضافة البند المخصص بنجاح');
+            };
+
+            window.deleteCustomItem = function (id) {
+                var car = getActiveVehicle();
+                if (!car) return;
+                car.customItems = (car.customItems || []).filter(function (x) { return x.id !== id; });
+                if (car.records) delete car.records[id];
+                safeSave();
+                renderMaintenanceList();
+                showToast('تم حذف البند المخصص');
+            };
+
+            // ==================== 9. CHECKLIST & HISTORY ====================
+            function renderChecklist() {
+                var car = getActiveVehicle();
+                if (!car) return;
+                if (!car.checklist) car.checklist = {};
+                var done = 0;
+                var html = '';
+                for (var i = 0; i < INITIAL_CHECKLIST.length; i++) {
+                    var c = INITIAL_CHECKLIST[i];
+                    var isDone = !!car.checklist[c.id];
+                    if (isDone) done++;
+                    html += '<label class="chk-item' + (isDone ? ' checked' : '') + '">' +
+                        '<input type="checkbox" ' + (isDone ? 'checked' : '') + ' onchange="toggleCheck(\'' + c.id + '\')">' +
+                        '<div>' +
+                        '<div style="font-size:13px;font-weight:800;' + (isDone ? 'text-decoration:line-through;opacity:0.85;' : '') + '">' + escHtml(c.title) + '</div>' +
+                        '<div style="font-size:11px;color:var(--text-secondary);margin-top:2px;">' + escHtml(c.desc) + '</div>' +
+                        '</div></label>';
+                }
+                byId('checklistContainer').innerHTML = html;
+                var pct = Math.round((done / INITIAL_CHECKLIST.length) * 100);
+                byId('chkPercentBadge').textContent = pct + '%';
+                byId('chkCountLabel').textContent = 'تم إنجاز ' + done + ' من ' + INITIAL_CHECKLIST.length;
+                byId('chkProgressFill').style.width = pct + '%';
+                byId('checklistNavDot').classList.toggle('hidden', done >= INITIAL_CHECKLIST.length);
+            }
+
+            window.toggleCheck = function (id) {
+                var car = getActiveVehicle();
+                if (!car) return;
+                if (!car.checklist) car.checklist = {};
+                car.checklist[id] = !car.checklist[id];
+                safeSave();
+                renderChecklist();
+            };
+
+            function renderHistory() {
+                var car = getActiveVehicle();
+                if (!car) return;
+                var hist = car.history || [];
+                var totalCost = 0;
+                for (var i = 0; i < hist.length; i++) totalCost += (Number(hist[i].cost) || 0);
+
+                byId('histCount').textContent = fmtNum(hist.length);
+                byId('histCost').textContent = fmtNum(totalCost);
+
+                if (!hist.length) {
+                    byId('historyContainer').innerHTML = '<div class="card" style="padding:28px 16px;text-align:center;">' +
+                        '<div style="font-size:14px;font-weight:800;margin-bottom:4px;">سجل الصيانات فارغ حالياً</div>' +
+                        '<div style="font-size:12px;color:var(--text-muted);">عند تسجيل أي صيانة ستظهر هنا بالتاريخ والعداد والتكلفة</div></div>';
+                    return;
+                }
+
+                var html = '<div class="timeline">';
+                for (var j = 0; j < hist.length; j++) {
+                    var h = hist[j];
+                    html += '<div class="timeline-card">' +
+                        '<span class="timeline-dot"></span>' +
+                        '<div style="min-width:0;flex:1;">' +
+                        '<div style="font-size:13px;font-weight:800;">' + escHtml(h.title) + '</div>' +
+                        '<div class="tabular" style="font-size:11px;font-weight:700;color:var(--text-secondary);margin-top:3px;">' +
+                        fmtNum(h.km) + ' كم • ' + escHtml(h.date) +
+                        (h.cost > 0 ? (' • <span style="color:var(--emerald);">' + fmtNum(h.cost) + ' د.ع</span>') : '') +
+                        '</div>' +
+                        (h.notes ? '<div style="font-size:11px;color:var(--text-secondary);background:var(--bg-input);padding:6px 8px;border-radius:8px;margin-top:6px;">' + escHtml(h.notes) + '</div>' : '') +
+                        '</div>' +
+                        '<button type="button" class="m-btn-del" onclick="deleteHistoryItem(\'' + h.id + '\')" title="حذف">✕</button>' +
+                        '</div>';
+                }
+                html += '</div>';
+                byId('historyContainer').innerHTML = html;
+            }
+
+            window.deleteHistoryItem = function (id) {
+                var car = getActiveVehicle();
+                if (!car) return;
+                car.history = (car.history || []).filter(function (x) { return x.id !== id; });
+                safeSave();
+                renderHistory();
+                showToast('تم حذف السجل');
+            };
+
+            // ==================== 10. MULTI-CAR & SETTINGS ====================
+            function buildVehiclesHtml(inModal) {
+                var active = getActiveVehicle();
+                var html = '';
+                for (var i = 0; i < appData.vehicles.length; i++) {
+                    var v = appData.vehicles[i];
+                    var isAct = active && v.id === active.id;
+                    var specStr = (v.settings.transmission || 'AT') + ' • ' + (v.settings.engineType === 'Hybrid' ? 'هايبرد' : 'بنزين');
+                    html += '<div class="car-row' + (isAct ? ' active-car' : '') + '">' +
+                        '<div onclick="switchVehicle(\'' + v.id + '\')" style="flex:1;min-width:0;cursor:pointer;">' +
+                        '<div style="display:flex;align-items:center;gap:6px;">' +
+                        '<span style="font-size:13px;font-weight:800;" class="truncate">' + escHtml(v.name) + '</span>' +
+                        (isAct ? '<span style="font-size:10px;font-weight:800;padding:2px 7px;border-radius:999px;background:var(--crimson);color:#fff;">نشطة</span>' : '') +
+                        '</div>' +
+                        '<div class="tabular" style="font-size:11px;color:var(--text-secondary);margin-top:2px;">' + fmtNum(v.odometer) + ' كم • ' + specStr + '</div>' +
+                        '</div>';
+                    if (!inModal && appData.vehicles.length > 1) {
+                        html += '<button type="button" class="m-btn-del" onclick="deleteVehicle(\'' + v.id + '\')" title="حذف السيارة">✕</button>';
+                    }
+                    html += '</div>';
+                }
+                return html;
+            }
+
+            window.openCarSwitcherModal = function () {
+                byId('modalVehiclesList').innerHTML = buildVehiclesHtml(true);
+                openModal('carSwitcherModal');
+            };
+
+            window.switchVehicle = function (carId) {
+                appData.activeVehicleId = carId;
+                safeSave();
+                closeModal('carSwitcherModal');
+                refreshAllUI();
+                var car = getActiveVehicle();
+                if (car) showToast('تم التبديل إلى: ' + car.name);
+            };
+
+            window.deleteVehicle = function (carId) {
+                if (appData.vehicles.length <= 1) {
+                    showToast('يجب الإبقاء على سيارة واحدة على الأقل');
+                    return;
+                }
+                appData.vehicles = appData.vehicles.filter(function (v) { return v.id !== carId; });
+                if (appData.activeVehicleId === carId) appData.activeVehicleId = appData.vehicles[0].id;
+                safeSave();
+                refreshAllUI();
+                showToast('تم حذف ملف السيارة');
+            };
+
+            function renderSettingsUI() {
+                var car = getActiveVehicle();
+                if (!car) return;
+                byId('settingsVehiclesList').innerHTML = buildVehiclesHtml(false);
+                byId('setCarNameInp').value = car.name || '';
+
+                var tArr = ['AT', 'CVT', 'DCT', 'MT'];
+                for (var i = 0; i < tArr.length; i++) {
+                    var elT = byId('set-trans-' + tArr[i]);
+                    if (elT) elT.classList.toggle('selected', car.settings.transmission === tArr[i]);
+                }
+                var eArr = ['Petrol', 'Hybrid'];
+                for (var j = 0; j < eArr.length; j++) {
+                    var elE = byId('set-eng-' + eArr[j]);
+                    if (elE) elE.classList.toggle('selected', car.settings.engineType === eArr[j]);
+                }
+                var oArr = [5000, 8000, 10000];
+                for (var k = 0; k < oArr.length; k++) {
+                    var elO = byId('set-oil-' + oArr[k]);
+                    if (elO) elO.classList.toggle('selected', Number(car.settings.oilInterval) === oArr[k]);
+                }
+            }
+
+            window.saveCarNameFromSettings = function () {
+                var car = getActiveVehicle();
+                if (!car) return;
+                var nm = byId('setCarNameInp').value.trim();
+                if (!nm) { showToast('يرجى كتابة اسم السيارة'); return; }
+                car.name = nm;
+                safeSave();
+                updateCockpitUI();
+                renderSettingsUI();
+                showToast('تم تحديث اسم السيارة');
+            };
+
+            window.updateCarSpec = function (key, val) {
+                var car = getActiveVehicle();
+                if (!car) return;
+                car.settings[key] = val;
+                safeSave();
+                updateCockpitUI();
+                renderSettingsUI();
+                renderMaintenanceList();
+                showToast('تم تحديث المواصفات تلقائياً');
+            };
+
+            window.downloadAppFile = function () {
+                try {
+                    var htmlContent = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+                    var blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8' });
+                    var url = URL.createObjectURL(blob);
+                    var a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'sayarati.html';
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                    showToast('تم تحميل ملف التطبيق (sayarati.html)');
+                } catch (e) {
+                    showToast('تعذر التحميل مباشرة من هذا المتصفح');
+                }
+            };
+
+            window.exportBackup = function () {
+                try {
+                    var blob = new Blob([JSON.stringify(appData, null, 2)], { type: 'application/json' });
+                    var url = URL.createObjectURL(blob);
+                    var a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'sayarati-backup-' + getTodayStr() + '.json';
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                    showToast('تم تصدير النسخة الاحتياطية');
+                } catch (e) {
+                    showToast('تعذر تصدير النسخة الاحتياطية');
+                }
+            };
+
+            window.importBackup = function (ev) {
+                var file = ev.target && ev.target.files && ev.target.files[0];
+                if (!file) return;
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    try {
+                        var parsed = JSON.parse(e.target.result);
+                        if (!parsed || !Array.isArray(parsed.vehicles) || !parsed.vehicles.length) {
+                            throw new Error('bad');
+                        }
+                        appData = parsed;
+                        safeSave();
+                        applyTheme();
+                        byId('setupWizard').classList.add('hidden');
+                        byId('mainAppShell').classList.remove('hidden');
+                        refreshAllUI();
+                        showToast('تم استعادة النسخة الاحتياطية بنجاح');
+                    } catch (err) {
+                        showToast('ملف النسخة الاحتياطية غير صالح');
+                    }
+                };
+                reader.readAsText(file);
+                ev.target.value = '';
+            };
+
+            window.confirmResetAll = function () {
+                try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
+                appData = { theme: appData.theme, activeVehicleId: null, vehicles: [] };
+                closeModal('resetModal');
+                window.openSetupWizard('first');
+                showToast('تم تصفير جميع البيانات');
+            };
+
+            // ==================== 11. MODAL HELPERS ====================
+            window.openModal = function (id) {
+                var el = byId(id);
+                if (el) el.classList.remove('hidden');
+            };
+
+            window.closeModal = function (id) {
+                var el = byId(id);
+                if (el) el.classList.add('hidden');
+            };
+
+            window.backdropClose = function (ev, id) {
+                if (ev.target && ev.target.id === id) closeModal(id);
+            };
+
+            // ==================== 12. ROCK-SOLID INITIALIZATION ====================
+            function initApp() {
+                try {
+                    safeLoad();
+                    applyTheme();
+                    if (!appData.vehicles || !appData.vehicles.length) {
+                        window.openSetupWizard('first');
+                    } else {
+                        byId('setupWizard').classList.add('hidden');
+                        byId('mainAppShell').classList.remove('hidden');
+                        refreshAllUI();
+                        window.switchView('maintenance');
+                    }
+                } catch (e) {
+                    // Fallback to wizard if anything unexpected occurs
+                    appData = { theme: 'dark', activeVehicleId: null, vehicles: [] };
+                    applyTheme();
+                    window.openSetupWizard('first');
+                }
+            }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', initApp);
+            } else {
+                initApp();
+            }
+        })();
+    </script>
+</body>
+</html>
